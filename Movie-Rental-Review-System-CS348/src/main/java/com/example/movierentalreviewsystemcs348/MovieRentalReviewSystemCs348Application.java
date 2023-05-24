@@ -8,7 +8,7 @@ public class MovieRentalReviewSystemCs348Application {
 
     public static void main(String[] args) {
         SpringApplication.run(MovieRentalReviewSystemCs348Application.class, args);
-        
+        System.out.println("Hello World");
     }
 
 }
