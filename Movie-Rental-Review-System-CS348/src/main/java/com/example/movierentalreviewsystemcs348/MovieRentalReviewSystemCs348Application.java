@@ -20,7 +20,7 @@ public class MovieRentalReviewSystemCs348Application {
 
         Connection conn = null;
         Statement stmt = null;
-        try{
+        try {
             // Register JDBC driver
             Class.forName(JDBC_DRIVER);
 
@@ -28,17 +28,28 @@ public class MovieRentalReviewSystemCs348Application {
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            // Execute a query
+            // Create a table
+            System.out.println("Creating table in given database...");
+            stmt = conn.createStatement();
+            String sql = "CREATE TABLE Employee " +
+                    "(ID INTEGER not NULL, " +
+                    " FirstName VARCHAR(255), " +
+                    " LastName VARCHAR(255), " +
+                    " Email VARCHAR(255), " +
+                    " PRIMARY KEY ( ID ))";
+            stmt.executeUpdate(sql);
+            System.out.println("Created table in given database...");
+
+            // Execute a query to select data
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-            String sql;
             sql = "SELECT ID, FirstName, LastName, Email FROM Employee";
             ResultSet rs = stmt.executeQuery(sql);
 
             // Extract data from result set
-            while(rs.next()){
+            while (rs.next()) {
                 // Retrieve by column name
-                int id  = rs.getInt("ID");
+                int id = rs.getInt("ID");
                 String first = rs.getString("FirstName");
                 String last = rs.getString("LastName");
                 String email = rs.getString("Email");
@@ -53,23 +64,23 @@ public class MovieRentalReviewSystemCs348Application {
             rs.close();
             stmt.close();
             conn.close();
-        }catch(SQLException se){
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){
+        } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
-        }finally{
+        } finally {
             //finally block used to close resources
-            try{
-                if(stmt!=null)
+            try {
+                if (stmt != null)
                     stmt.close();
-            }catch(SQLException se2){
+            } catch (SQLException se2) {
             }// nothing we can do
-            try{
-                if(conn!=null)
+            try {
+                if (conn != null)
                     conn.close();
-            }catch(SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }
         }
