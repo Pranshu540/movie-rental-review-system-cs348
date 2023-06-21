@@ -1,0 +1,4 @@
+ DROP TABLE Movie;
+ DROP TABLE User;
+ DROP TABLE Review;
+ DROP TABLE Rental;
