@@ -319,15 +319,19 @@ def main():
             print("Signup failed. Please try again.")
             username = input("Username: ")
             password = input("Password: ")
-
-    # If the user is not new, we ask them to login
-    print("Please login")
-    username = input("Username: ")
-    password = input("Password: ")
-    while(signin(username, password) is False):
-        print("Login failed. Please try again.")
+        # after sign up is successful we try logging in
+        while(signin(username, password) is False):
+            pass
+            # continue trying to login until successful
+    elif option == "n":
+        # If the user is not new, we ask them to login
+        print("Please login")
         username = input("Username: ")
         password = input("Password: ")
+        while(signin(username, password) is False):
+            print("Login failed. Please try again.")
+            username = input("Username: ")
+            password = input("Password: ")
     # Once the user is logged in, we display the menu
     print("Menu:")
     print("1. See all movies")
