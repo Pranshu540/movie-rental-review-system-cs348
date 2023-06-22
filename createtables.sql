@@ -19,21 +19,21 @@ CREATE TABLE User (
 );
 
 CREATE TABLE Review (
-    uid INT NOT NULL REFERENCES User(userid),
+    uid INT NOT NULL REFERENCES User(uid),
     mid INT NOT NULL REFERENCES Movie(mid),
     review_date DATE, /* 'YYYY-MM-DD' */
     rating INT CHECK(rating BETWEEN 1 and 5), /* Out of 5 stars */
     comment VARCHAR(100),
-    PRIMARY KEY(userid, mid)
+    PRIMARY KEY(uid, mid)
 );
 
 CREATE TABLE Rental (
-    uid INT NOT NULL REFERENCES User(userid),
+    uid INT NOT NULL REFERENCES User(uid),
     mid INT NOT NULL REFERENCES Movie(mid),
     rent_date DATE, /* 'YYYY-MM-DD' */
     due_date DATE, /* Standard rent period is 2 weeks */
     is_active INT, /* 1 if rental is currently active, otherwise 0 */
-    PRIMARY KEY(userid, mid)
+    PRIMARY KEY(uid, mid)
 );
 
 
