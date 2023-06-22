@@ -302,6 +302,8 @@ def main():
     # We create a terminal interface for the user to interact with the database
     print("Welcome to the Movie Rental Database!")
     option = input("Are you a new user? (y/n): ")
+    while option != "y" and option != "n":
+        option = input("Please enter y or n: ")
     if option == "y":
         # If the user is new, we ask them to create an account
         print("Please create an account")
