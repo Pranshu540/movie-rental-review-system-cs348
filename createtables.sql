@@ -10,11 +10,12 @@ CREATE TABLE Movie (
 );
 
 CREATE TABLE User (
-    uid INT NOT NULL PRIMARY KEY,
-    username VARCHAR(30),
+    uid INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(30) UNIQUE,
     password VARCHAR(30),
-    wallet DECIMAL(7, 2)
-    CONSTRAINT chk_wallet CHECK (wallet >= 0)
+    wallet DECIMAL(7, 2),
+    CONSTRAINT chk_wallet CHECK (wallet >= 0),
+    PRIMARY KEY (uid)
 );
 
 CREATE TABLE Review (
