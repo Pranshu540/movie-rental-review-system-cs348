@@ -10,7 +10,7 @@ db_user = os.getenv("DB_USER")
 db_password = os.getenv("DB_PASSWORD")
 db_name = os.getenv("DB_NAME")
 
-instance_user = {'username': '', 'uid': ''}
+
 
 
 mydb = mysql.connector.connect(
@@ -28,6 +28,20 @@ def connect_to_db():
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME")
     )
+
+# instance_user is a dictionary that stores the current user's username and uid
+instance_user = {'username': '', 'uid': ''}
+
+####
+# Function: isLogged
+# Description: Checks if the user is logged in
+# Parameters: None
+# Returns true if the user is logged in, false otherwise
+# Author: Nicholas Jiang
+####
+
+def isLogged():
+    return instance_user['username'] != '' and instance_user['uid'] != ''
 
 ####
 # Function: Authenticate
