@@ -18,21 +18,12 @@ mydb = mysql.connector.connect(
     database=db_name
 )
 
-# def get_db_connection():
-#     return mysql.connector.connect(
-#         host="localhost",
-#         user="root",
-#         password="password",
-#         database="movie_rental_proj"
-#     )
-
 
 def find_user_id(user):
     query = "SELECT userid FROM User WHERE username=%s"
     user_id = -1
     try:
         user_id_cursor = mydb.cursor()
-        user_id_cursor.execute("use sys")
 
         user_id_cursor.execute(query, (user,))
         user_id = user_id_cursor.fetchone()[0]
@@ -49,7 +40,6 @@ def find_movie_id(movie):
     mid = -1
     try:
         mid_cursor = mydb.cursor()
-        mid_cursor.execute("use sys")
 
         mid_cursor.execute(query, (movie,))
         mid = mid_cursor.fetchone()[0]
@@ -65,7 +55,6 @@ def create_review(user, movie, rating, comment):
     query = "INSERT INTO Review VALUES(%s, %s, %s, %s, %s)"
     try:
         create_review_cursor = mydb.cursor()
-        create_review_cursor.execute("use sys")
 
         userid = find_user_id(user)
         # print(f'User ID has been acquired. ', userid)
@@ -88,7 +77,6 @@ def remove_review(user, movie):
     query = "DELETE FROM Review WHERE uid = %s AND mid = %s"
     try:
         remove_review_cursor = mydb.cursor()
-        remove_review_cursor.execute("use sys")
 
         userid = find_user_id(user)
         # print(f'User ID has been acquired. ', userid)
@@ -110,7 +98,6 @@ def modify_review(user, movie, rating, comment):
     query = "UPDATE Review SET review_date = %s, rating = %s, comment = %s WHERE uid = %s AND mid = %s"
     try:
         update_review_cursor = mydb.cursor()
-        update_review_cursor.execute("use sys")
 
         userid = find_user_id(user)
         # print(f'User ID has been acquired. ', userid)
