@@ -30,9 +30,8 @@ def connect_to_db():
 def find_user_id(user):
     query = "SELECT userid FROM User WHERE username=%s"
     user_id = -1
+    user_id_cursor = mydb.cursor()
     try:
-        user_id_cursor = mydb.cursor()
-
         user_id_cursor.execute(query, (user,))
         user_id = user_id_cursor.fetchone()[0]
     except mysql.connector.Error as error:
@@ -46,9 +45,8 @@ def find_user_id(user):
 def find_movie_id(movie):
     query = "SELECT mid FROM Movie WHERE title=%s"
     mid = -1
+    mid_cursor = mydb.cursor()
     try:
-        mid_cursor = mydb.cursor()
-
         mid_cursor.execute(query, (movie,))
         mid = mid_cursor.fetchone()[0]
     except mysql.connector.Error as error:
@@ -61,9 +59,8 @@ def find_movie_id(movie):
 
 def create_review(user, movie, rating, comment):
     query = "INSERT INTO Review VALUES(%s, %s, %s, %s, %s)"
+    create_review_cursor = mydb.cursor()
     try:
-        create_review_cursor = mydb.cursor()
-
         userid = find_user_id(user)
         # print(f'User ID has been acquired. ', userid)
 
@@ -83,9 +80,8 @@ def create_review(user, movie, rating, comment):
 
 def remove_review(user, movie):
     query = "DELETE FROM Review WHERE uid = %s AND mid = %s"
+    remove_review_cursor = mydb.cursor()
     try:
-        remove_review_cursor = mydb.cursor()
-
         userid = find_user_id(user)
         # print(f'User ID has been acquired. ', userid)
 
@@ -104,9 +100,8 @@ def remove_review(user, movie):
 
 def modify_review(user, movie, rating, comment):
     query = "UPDATE Review SET review_date = %s, rating = %s, comment = %s WHERE uid = %s AND mid = %s"
+    update_review_cursor = mydb.cursor()
     try:
-        update_review_cursor = mydb.cursor()
-
         userid = find_user_id(user)
         # print(f'User ID has been acquired. ', userid)
 
