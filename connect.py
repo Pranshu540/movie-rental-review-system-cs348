@@ -51,8 +51,8 @@ def isLogged():
 def authenticate(username, password):
     db = mydb
     cursor = db.cursor()
-    # SELECT EXISTS(SELECT 1 FROM Users WHERE username='givenUsername' AND password='givenPassword')
-    query = f"SELECT EXISTS(SELECT 1 FROM Users WHERE username='{username}' AND password='{password}')"
+    # SELECT EXISTS(SELECT 1 FROM User WHERE username='givenUsername' AND password='givenPassword')
+    query = f"SELECT EXISTS(SELECT 1 FROM User WHERE username='{username}' AND password='{password}')"
     cursor.execute(query)
     result = cursor.fetchone()[0]
     return result == 1
@@ -88,7 +88,7 @@ def signup(username, password):
     try:
         db = mydb
         cursor = db.cursor()
-        query = f"INSERT INTO Users(username, password) VALUES ('{username}', '{password}')"
+        query = f"INSERT INTO User(username, password) VALUES ('{username}', '{password}')"
         cursor.execute(query)
         db.commit()
         print("User created successfully.")
