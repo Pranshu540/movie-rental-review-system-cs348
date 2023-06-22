@@ -18,15 +18,6 @@ mydb = mysql.connector.connect(
     database=db_name
 )
 
-
-def connect_to_db():
-    return mysql.connector.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-        database=os.getenv("DB_NAME")
-    )
-
 # instance_user is a dictionary that stores the current user's username and uid
 instance_user = {'username': '', 'uid': ''}
 
@@ -191,7 +182,7 @@ def modify_review(user, movie, rating, comment):
 
 
 def rent_movie(user_id, movie_id):
-    db = connect_to_db()
+    db = mydb
     cursor = db.cursor()
 
     # Check if the user and movie exists and the movie is available for rent
@@ -245,7 +236,7 @@ def rent_movie(user_id, movie_id):
 
 
 def check_rentals():
-    db = connect_to_db()
+    db = mydb
     cursor = db.cursor()
     cursor.execute("SELECT * FROM Rental")
     result = cursor.fetchall()
@@ -297,14 +288,14 @@ def check_rentals():
 # Testing out the rental feature:
 
 
-print('This is before renting movie')
-check_rentals()
-
-print('Harold renting movie')
-rent_movie(2, 2)
-
-print('This is after renting movie')
-check_rentals()
+# print('This is before renting movie')
+# check_rentals()
+#
+# print('Harold renting movie')
+# rent_movie(2, 2)
+#
+# print('This is after renting movie')
+# check_rentals()
 
 
 def main():
@@ -340,3 +331,5 @@ def main():
     print("4. Rent a movie")
     print("5. Add a review")
     print("6. Remove a review")
+
+main()
