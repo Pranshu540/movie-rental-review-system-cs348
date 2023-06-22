@@ -3,7 +3,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="1234Cats"
+  password="password"
 )
 
 def filter_movies(titleFilter, countFilter, genreFilter):
@@ -31,12 +31,13 @@ def filter_movies(titleFilter, countFilter, genreFilter):
     filterParams.append(genreFilter)
 
   try: 
-    mycursor = mydb.cursor()
-    mycursor.execute("use sys")
-    mycursor.execute(cmd, filterParams)
+    cursor = mydb.cursor()
+    cursor.execute("use sys")
+    cursor.execute(cmd, filterParams)
 
-    myresult = mycursor.fetchall()
+    myresult = cursor.fetchall()
   except mysql.connector.Error as err:
     print("Something went wrong: {}".format(err))
-  
-  return myresult
+  finally:
+    cursor.close()
+    return myresult
