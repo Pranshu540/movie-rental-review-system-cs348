@@ -3,51 +3,40 @@ import mysql.connector
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="password"
+  password="1234Cats"
 )
 
-titleFilter = input("Enter Filter for Title: ")
-while(True):
-  countFilter = input("Enter Filter for Count: ")
-  try:
-    countFilter = int(countFilter)
-    break
-  except:
-    print("Please enter a number.\n")
+def filter_movies(titleFilter, countFilter, genreFilter):
+  filterParams = []
+  cmd = "SELECT * FROM Movie"
 
-genreFilter = input("Enter Filter for Genre: ")
-filterParams = []
-cmd = "SELECT * FROM Movie"
+  if titleFilter: 
+   cmd += " WHERE title LIKE %s"
+   filterParams.append("%" + titleFilter + "%")
 
-if titleFilter: 
-  cmd += " WHERE title LIKE %s"
-  filterParams.append("%" + titleFilter + "%")
+  if countFilter > 0:
+    if titleFilter:
+      cmd += " AND"
+    else:
+      cmd += " WHERE"
+    cmd += " rental_quantity >= %s"
+    filterParams.append(countFilter)
 
-if countFilter > 0:
-  if titleFilter:
-    cmd += " AND"
-  else:
-    cmd += " WHERE"
-  cmd += " rental_quantity >= %s"
-  filterParams.append(countFilter)
+  if genreFilter:
+    if titleFilter or countFilter:
+      cmd += " AND"
+    else:
+      cmd += " WHERE"
+    cmd += "  genre=%s"
+    filterParams.append(genreFilter)
 
-if genreFilter:
-  if titleFilter or countFilter:
-    cmd += " AND"
-  else:
-    cmd += " WHERE"
-  cmd += "  genre=%s"
-  filterParams.append(genreFilter)
+  try: 
+    mycursor = mydb.cursor()
+    mycursor.execute("use sys")
+    mycursor.execute(cmd, filterParams)
 
-try: 
-  mycursor = mydb.cursor()
-  mycursor.execute("use sys")
-  mycursor.execute(cmd, filterParams)
-
-  myresult = mycursor.fetchall()
-except mysql.connector.Error as err:
-  print("Something went wrong: {}".format(err))
-
-
-for x in myresult:
-  print(x)
+    myresult = mycursor.fetchall()
+  except mysql.connector.Error as err:
+    print("Something went wrong: {}".format(err))
+  
+  return myresult
