@@ -6,13 +6,15 @@ CREATE TABLE Movie (
     duration INT, /* minutes */
     rental_price DECIMAL(5, 2), /* Standard price is $9.99 for now */
     rental_quantity INT
+    CONSTRAINT chk_rental_quantity CHECK (rental_quantity >= 0)
 );
 
 CREATE TABLE User (
     uid INT NOT NULL PRIMARY KEY,
     username VARCHAR(30),
-    pasword VARCHAR(30),
+    password VARCHAR(30),
     wallet DECIMAL(7, 2)
+    CONSTRAINT chk_wallet CHECK (wallet >= 0)
 );
 
 CREATE TABLE Review (
@@ -32,3 +34,5 @@ CREATE TABLE Rental (
     is_active INT, /* 1 if rental is currently active, otherwise 0 */
     PRIMARY KEY(userid, mid)
 );
+
+
