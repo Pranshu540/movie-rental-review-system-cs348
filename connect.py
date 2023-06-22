@@ -1,5 +1,4 @@
-from flask import jsonify
-from datetime import date
+from datetime import date, timedelta
 from dotenv import load_dotenv
 import os
 import mysql.connector
@@ -17,6 +16,15 @@ mydb = mysql.connector.connect(
     password=db_password,
     database=db_name
 )
+
+
+def connect_to_db():
+    return mysql.connector.connect(
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
+    )
 
 
 def find_user_id(user):
@@ -116,37 +124,69 @@ def modify_review(user, movie, rating, comment):
         update_review_cursor.close()
 
 
-def rent_movie(uid, mid):
-    cursor = mydb.cursor()
+def rent_movie(user_id, movie_id):
+    db = connect_to_db()
+    cursor = db.cursor()
 
-    # Proceed with the rental operation: update the User's wallet, decrease the Movie's quantity and insert a new Rental
-    mydb.start_transaction()
+    # Check if the user and movie exists and the movie is available for rent
+    cursor.execute(f"SELECT rental_quantity FROM Movie WHERE mid = {movie_id}")
+    movie_result = cursor.fetchone()
+    if not movie_result:
+        print("Movie does not exist")
+        return
+    elif movie_result[0] <= 0:
+        print("Movie is not available for rent")
+        return
+
+    cursor.execute(f"SELECT wallet FROM User WHERE uid = {user_id}")
+    user_result = cursor.fetchone()
+    if not user_result:
+        print("User does not exist")
+        return
+
+    # Check if the user has enough balance in the wallet to rent the movie
+    cursor.execute(f"SELECT rental_price FROM Movie WHERE mid = {movie_id}")
+    rental_price = cursor.fetchone()[0]
+    if user_result[0] < rental_price:
+        print("User does not have enough balance to rent the movie")
+        return
+
+    # Start transaction
+    cursor.execute("START TRANSACTION")
 
     try:
-        sql = """
-        UPDATE User, Movie SET User.wallet = User.wallet - Movie.rental_price, 
-        Movie.rental_quantity = Movie.rental_quantity - 1 
-        WHERE User.uid = %s AND Movie.mid = %s AND Movie.rental_quantity > 0 AND User.wallet >= Movie.rental_price
-        """
-        cursor.execute(sql, (uid, mid))
+        # Decrement the quantity of the movie and deduct the price from the user's wallet
+        cursor.execute(f"UPDATE Movie SET rental_quantity = rental_quantity - 1 WHERE mid = {movie_id}")
+        cursor.execute(f"UPDATE User SET wallet = wallet - {rental_price} WHERE uid = {user_id}")
 
-        if cursor.rowcount == 0:
-            mydb.rollback()
-            return jsonify({'message': 'Movie not available or insufficient funds'}), 400
+        # Insert a new rental record
+        rent_date = date.today()
+        due_date = date.today() + timedelta(weeks=2)
+        cursor.execute(f"INSERT INTO Rental (uid, mid, rent_date, due_date, is_active) VALUES ({user_id}, {movie_id}, '{rent_date}', '{due_date}', 1)")
 
-        sql = """
-        INSERT INTO Rental (uid, mid, rent_date, due_date, is_active) 
-        VALUES (%s, %s, date.today(), date.today() + timedelta(weeks=2), 1)
-        """
-        cursor.execute(sql, (uid, mid))
+        # Commit the transaction
+        db.commit()
+        print("Movie rented successfully")
 
-        mydb.commit()
+    except Exception as e:
+        # If an error occurred, rollback the transaction
+        db.rollback()
+        print(f"An error occurred: {e}")
 
-    except mysql.connector.Error:
-        mydb.rollback()
-        return jsonify({'message': 'Error occurred during rental process'}), 500
+    finally:
+        cursor.close()
+        db.close()
 
-    return jsonify({'message': 'Movie rented successfully'})
+
+def check_rentals():
+    db = connect_to_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Rental")
+    result = cursor.fetchall()
+    for x in result:
+        print(x)
+    cursor.close()
+    db.close()
 
 # Testing out the review feature:
 #
@@ -159,10 +199,9 @@ def rent_movie(uid, mid):
 # cursor.close()
 #
 # create_review('george', 'The Book Thief', 4, 'Teaches people how to steal, great for a broke person like myself')
-#
-# print('\nThis is after adding a review')
+# #
+# # print('\nThis is after adding a review')
 # cursor = mydb.cursor()
-# cursor.execute("use sys")
 # cursor.execute("SELECT * FROM Review")
 # result = cursor.fetchall()
 # for x in result:
@@ -188,3 +227,15 @@ def rent_movie(uid, mid):
 # for x in result:
 #     print(x)
 # cursor.close()
+
+# Testing out the rental feature:
+
+
+print('This is before renting movie')
+check_rentals()
+
+print('Harold renting movie')
+rent_movie(2, 2)
+
+print('This is after renting movie')
+check_rentals()
