@@ -99,7 +99,7 @@ def signup(username, password):
         return False
 
 def find_user_id(user):
-    query = "SELECT userid FROM User WHERE username=%s"
+    query = "SELECT uid FROM User WHERE username=%s"
     user_id = -1
     user_id_cursor = mydb.cursor()
     try:
