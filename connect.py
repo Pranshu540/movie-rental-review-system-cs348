@@ -1,11 +1,30 @@
-import mysql.connector
+from flask import jsonify
 from datetime import date
+from dotenv import load_dotenv
+import os
+import mysql.connector
+
+load_dotenv()  # load variables from .env file
+
+db_host = os.getenv("DB_HOST")
+db_user = os.getenv("DB_USER")
+db_password = os.getenv("DB_PASSWORD")
+db_name = os.getenv("DB_NAME")
 
 mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="password"
+    host=db_host,
+    user=db_user,
+    password=db_password,
+    database=db_name
 )
+
+# def get_db_connection():
+#     return mysql.connector.connect(
+#         host="localhost",
+#         user="root",
+#         password="password",
+#         database="movie_rental_proj"
+#     )
 
 
 def find_user_id(user):
@@ -86,6 +105,7 @@ def remove_review(user, movie):
     finally:
         remove_review_cursor.close()
 
+
 def modify_review(user, movie, rating, comment):
     query = "UPDATE Review SET review_date = %s, rating = %s, comment = %s WHERE uid = %s AND mid = %s"
     try:
@@ -108,11 +128,43 @@ def modify_review(user, movie, rating, comment):
     finally:
         update_review_cursor.close()
 
+
+def rent_movie(uid, mid):
+    cursor = mydb.cursor()
+
+    # Proceed with the rental operation: update the User's wallet, decrease the Movie's quantity and insert a new Rental
+    mydb.start_transaction()
+
+    try:
+        sql = """
+        UPDATE User, Movie SET User.wallet = User.wallet - Movie.rental_price, 
+        Movie.rental_quantity = Movie.rental_quantity - 1 
+        WHERE User.uid = %s AND Movie.mid = %s AND Movie.rental_quantity > 0 AND User.wallet >= Movie.rental_price
+        """
+        cursor.execute(sql, (uid, mid))
+
+        if cursor.rowcount == 0:
+            mydb.rollback()
+            return jsonify({'message': 'Movie not available or insufficient funds'}), 400
+
+        sql = """
+        INSERT INTO Rental (uid, mid, rent_date, due_date, is_active) 
+        VALUES (%s, %s, date.today(), date.today() + timedelta(weeks=2), 1)
+        """
+        cursor.execute(sql, (uid, mid))
+
+        mydb.commit()
+
+    except mysql.connector.Error:
+        mydb.rollback()
+        return jsonify({'message': 'Error occurred during rental process'}), 500
+
+    return jsonify({'message': 'Movie rented successfully'})
+
 # Testing out the review feature:
 #
 # print('This is before adding a review')
 # cursor = mydb.cursor()
-# cursor.execute("use sys")
 # cursor.execute("SELECT * FROM Review")
 # result = cursor.fetchall()
 # for x in result:
