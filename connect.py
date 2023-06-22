@@ -10,6 +10,9 @@ db_user = os.getenv("DB_USER")
 db_password = os.getenv("DB_PASSWORD")
 db_name = os.getenv("DB_NAME")
 
+instance_user = {'username': '', 'uid': ''}
+
+
 mydb = mysql.connector.connect(
     host=db_host,
     user=db_user,
@@ -26,6 +29,61 @@ def connect_to_db():
         database=os.getenv("DB_NAME")
     )
 
+####
+# Function: Authenticate
+# Description: Checks if the username and password are valid
+# Parameters: username, password
+# Returns true if there exists a user with the given username and password, false otherwise
+# Author: Nicholas Jiang
+####
+def authenticate(username, password):
+    db = mydb
+    cursor = db.cursor()
+    cursor.execute(f"SELECT * FROM User WHERE username = '{username}' AND password = '{password}'")
+    result = cursor.fetchone()
+    cursor.close()
+    return result is not None
+
+####
+# Function: Signin
+# Description: Signs in the user with the given username and password
+# Parameters: username, password
+# Returns true if the user was successfully signed in, false otherwise
+# Author: Nicholas Jiang
+####
+def signin(username, password):
+    if (authenticate(username, password)):
+        # login successful
+        print("Login successful.")
+        print("Welcome, " + username + "!")
+        instance_user['username'] = username
+        instance_user['uid'] = find_user_id(username)
+        return True
+    else:
+        # login failed
+        print("Login failed. Please try again.")
+        return False
+
+####
+# Function: Signup
+# Description: Creates a new user with the given username and password if the username is not taken
+# Parameters: username, password
+# Returns true if the user was successfully created, false otherwise
+# Author: Nicholas Jiang
+####
+def signup(username, password):
+    try:
+        db = mydb
+        cursor = db.cursor()
+        query = f"INSERT INTO Users(username, password) VALUES ('{username}', '{password}')"
+        cursor.execute(query)
+        db.commit()
+        print("User created successfully.")
+        return True
+
+    except mysql.connector.Error as error:
+        print("Error creating user: {}".format(error))
+        return False
 
 def find_user_id(user):
     query = "SELECT userid FROM User WHERE username=%s"
