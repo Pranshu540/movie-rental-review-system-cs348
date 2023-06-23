@@ -1,0 +1,4 @@
+(5, '2001: A Space Odyssey', 'Sci-Fi', 1968, 149, Decimal('9.99'), 2)
+(10, 'The Book Thief', 'Drama', 2013, 131, Decimal('9.99'), 3)
+
+(3, 'The Amazing Spider-Man', 'Sci-Fi', 2012, 136, Decimal('9.99'), 13)
