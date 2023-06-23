@@ -12,14 +12,14 @@ Run main.py
 
 Supported Features:
 User Creation and Authentication
-	- Users are prompted to login after starting main.py
-	- Can create new user or login to existing user
+- Users are prompted to login after starting main.py
+- Can create new user or login to existing user
 Search Filters:
-	- Users can filter out movies from the database
-	- Can Filter based on the movie title, genre, and/or rental availability
+- Users can filter out movies from the database
+- Can Filter based on the movie title, genre, and/or rental availability
 Rental Transactions:
-	- Users can get a list of all rental history
-	- Users can pick a movie to rent if they have sufficient funds in their wallet
+- Users can get a list of all rental history
+- Users can pick a movie to rent if they have sufficient funds in their wallet
 Review System:
-	- Users can create a review for a movie including a rating and comments
-	- After creation users can modify or delete their reviews as desired
+- Users can create a review for a movie including a rating and comments
+- After creation users can modify or delete their reviews as desired
