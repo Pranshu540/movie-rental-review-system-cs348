@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 import os
 from features.userauth import *
+from features.review import *
+from features.rental import *
 
 load_dotenv()  # load variables from .env file
 
@@ -45,11 +47,15 @@ def main():
             username = input("Username: ")
             password = input("Password: ")
     # Once the user is logged in, we display the menu
-    print("Menu:")
-    print("1. See all movies")
-    print("3. See all rentals")
-    print("4. Rent a movie")
-    print("5. Add a review")
-    print("6. Remove a review")
+    while True:
+        print("Menu:")
+        print("1. See all movies")
+        print("2. See all reviews")
+        print("3. See all rentals")
+        print("4. Rent a movie")
+        print("5. Add a review")
+        print("6. Remove a review")
+        print("7. Modify a review")
 
-main()
+if __name__ = "__main__":
+    main()
