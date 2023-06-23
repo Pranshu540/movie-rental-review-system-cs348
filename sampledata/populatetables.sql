@@ -23,7 +23,6 @@ INSERT INTO Review VALUES (2, 7, '2023-06-16', 5, 'I love this movie, Batman roc
 INSERT INTO Review VALUES (2, 3, '2023-06-16', 1, 'Spider-Man is not as as cool as Batman :(');
 INSERT INTO Review VALUES (1, 3, '2019-09-08', 4, 'Good, but CGI was a bit over the top.');
 INSERT INTO Review VALUES (5, 9, '2015-12-25', 3, 'Decent classic');
-INSERT INTO Review VALUES (4, 10, '2023-06-17', 4, 'Teaches people how to steal, great for a broke person like myself');
 
 /* Sample Rentals */
 INSERT INTO Rental VALUES (1, 3, '2015-12-20', '2016-01-03', 0);
