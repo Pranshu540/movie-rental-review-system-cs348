@@ -46,6 +46,8 @@ def main():
             print("Login failed. Please try again.")
             username = input("Username: ")
             password = input("Password: ")
+    user_id = instance_user['uid']
+    username = instance_user['username']
     # Once the user is logged in, we display the menu
     while True:
         print("Menu:")
@@ -56,6 +58,61 @@ def main():
         print("5. Add a review")
         print("6. Remove a review")
         print("7. Modify a review")
+        print("8. Quit")
+        try:
+            choice = int(input("Please enter your selection: "))
+        except:
+            print("Please input a valid choice.")
+            continue
+        if choice == 1:
+            pass
+            # do nothing for now
+        elif choice == 2:
+            check_all_reviews(mydb)
+        elif choice == 3:
+            check_rentals(mydb)
+        elif choice == 4:
+            title = input("Please enter the name of the movie you'd like to rent: ")
+            movie_id = find_movie_id(title, mydb)
+            wallet = find_user_wallet(user_id, mydb)
+            cost = find_movie_cost(movie_id, mydb)
+            if cost == -1:
+                print("Requested movie does not exist in the database.")
+                continue
+            print(f"The price of the movie requested is {cost}.")
+            print(f"Your available funds are {wallet}.")
+            option = input("Would you like to proceed with the rental? (y/n): ")
+            while option != "y" and option != "n":
+                option = input("Please enter y or n: ")
+            if option == "y":
+                rent_movie(user_id, movie_id, mydb)
+            continue
+        elif choice == 5:
+            title = input("Please enter the name of the movie you'd like to review: ")
+            rating = int(input("Please enter the rating of the movie you'd like to review: "))
+            comment = input("Please enter your review: ")
+            movie_id = find_movie_id(title, mydb)
+            create_review(user_id, movie_id, rating, comment, mydb)
+            print("Review has been added successfully.")
+        elif choice == 6:
+            title = input("Please enter the name of the movie you'd like to remove your review from: ")
+            movie_id = find_movie_id(title, mydb)
+            remove_review(user_id, movie_id, mydb)
+            print("Review has been removed successfully.")
+        elif choice == 7:
+            title = input("Please enter the name of the movie that you reviewed: ")
+            rating = int(input("Please enter the rating of the movie that you reviewed: "))
+            comment = input("Please enter your new review comment: ")
+            movie_id = find_movie_id(title, mydb)
+            modify_review(user_id, movie_id, rating, comment, mydb)
+            print("Review has been modified successfully.")
+        elif choice == 8:
+            print(f"Thank you so much for using our system! See you again {username}!")
+            break
+        else:
+            continue
 
-if __name__ = "__main__":
+
+
+if __name__ == "__main__":
     main()

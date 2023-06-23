@@ -53,7 +53,6 @@ def rent_movie(user_id, movie_id, mydb):
 
     finally:
         cursor.close()
-        db.close()
 
 
 def check_rentals(mydb):
@@ -64,4 +63,3 @@ def check_rentals(mydb):
     for x in result:
         print(x)
     cursor.close()
-    db.close()
