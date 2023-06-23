@@ -3,6 +3,7 @@ import os
 from features.userauth import *
 from features.review import *
 from features.rental import *
+from features.movie_filter import *
 
 load_dotenv()  # load variables from .env file
 
@@ -51,7 +52,7 @@ def main():
     # Once the user is logged in, we display the menu
     while True:
         print("Menu:")
-        print("1. See all movies")
+        print("1. See list of movies")
         print("2. See all reviews")
         print("3. See all rentals")
         print("4. Rent a movie")
@@ -65,8 +66,11 @@ def main():
             print("Please input a valid choice.")
             continue
         if choice == 1:
-            pass
-            # do nothing for now
+            title_filter = input("Please enter the title of the movie you want to filter: ")
+            count_filter = input("Please enter the quantity of the movie you want to filter: ")
+            genre_filter = input("Please enter the genre of movie you want to filter: ")
+            filter_movies(title_filter, count_filter, genre_filter)
+
         elif choice == 2:
             check_all_reviews(mydb)
         elif choice == 3:
@@ -111,7 +115,6 @@ def main():
             break
         else:
             continue
-
 
 
 if __name__ == "__main__":
