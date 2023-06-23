@@ -1,6 +1,20 @@
 import mysql.connector
 
 
+def print_users(mydb):
+    query = "SELECT * FROM User"
+    user_cursor = mydb.cursor()
+    try:
+        user_cursor.execute(query)
+        result = user_cursor.fetchall()
+    except mysql.connector.Error as error:
+        print('There was an error in fetching users:')
+        print(error)
+    finally:
+        user_cursor.close()
+        for x in result:
+            print(x)
+
 def find_user_id(user, mydb):
     query = "SELECT uid FROM User WHERE username=%s"
     user_id = -1

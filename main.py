@@ -52,6 +52,7 @@ def main():
     # Once the user is logged in, we display the menu
     while True:
         print("Menu:")
+        print("0. (ADMIN) See all users")
         print("1. See list of movies")
         print("2. See all reviews")
         print("3. See all rentals")
@@ -65,12 +66,19 @@ def main():
         except:
             print("Please input a valid choice.")
             continue
+        if choice == 0:
+            print("Printing all users in the database:")
+            print_users(mydb)
         if choice == 1:
             title_filter = input("Please enter the title of the movie you want to filter: ")
-            count_filter = input("Please enter the quantity of the movie you want to filter: ")
+            try:
+                count_filter = int(input("Please enter the quantity of the movie you want to filter: "))
+            except:
+                print("Invalid count, needs to be a number >= 0. Try again")
+                continue
             genre_filter = input("Please enter the genre of movie you want to filter: ")
-            filter_movies(title_filter, count_filter, genre_filter)
-
+            print("Here is the list of the movies with the filters applied: ")
+            filter_movies(title_filter, count_filter, genre_filter, mydb)
         elif choice == 2:
             check_all_reviews(mydb)
         elif choice == 3:
@@ -115,7 +123,6 @@ def main():
             break
         else:
             continue
-
 
 if __name__ == "__main__":
     main()

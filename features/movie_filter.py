@@ -2,7 +2,7 @@ import mysql.connector
 from util.util import *
 
 
-def filter_movies(title_filter, count_filter, genre_filter):
+def filter_movies(title_filter, count_filter, genre_filter, mydb):
     filter_params = []
     cmd = "SELECT * FROM Movie"
 
