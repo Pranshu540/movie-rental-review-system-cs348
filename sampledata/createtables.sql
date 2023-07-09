@@ -4,8 +4,8 @@ CREATE TABLE Movie (
     genre VARCHAR(30) NOT NULL,
     release_year INT NOT NULL, /* YYYY */
     duration INT NOT NULL, /* minutes */
-    rental_price DECIMAL(5, 2) NOT NULL, /* Standard price is $9.99 for now */
-    rental_quantity INT NOT NULL
+    rental_price DECIMAL(5, 2) NOT NULL DEFAULT 9.99, /* Default price is $9.99 */
+    rental_quantity INT NOT NULL DEFAULT 10,
     CONSTRAINT chk_rental_quantity CHECK (rental_quantity >= 0)
 );
 
