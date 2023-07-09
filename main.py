@@ -4,6 +4,7 @@ from features.userauth import *
 from features.review import *
 from features.rental import *
 from features.movie_filter import *
+from features.delete_user import *
 
 load_dotenv()  # load variables from .env file
 
@@ -60,7 +61,8 @@ def main():
         print("5. Add a review")
         print("6. Remove a review")
         print("7. Modify a review")
-        print("8. Quit")
+        print("8. Delete your account")
+        print("9. Quit")
         try:
             choice = int(input("Please enter your selection: "))
         except:
@@ -119,6 +121,15 @@ def main():
             modify_review(user_id, movie_id, rating, comment, mydb)
             print("Review has been modified successfully.")
         elif choice == 8:
+            confirm = input('Are you sure you wish to continue? (y/n): ')
+            while confirm != "y" and confirm != "n":
+                confirm = input("Please enter y or n: ")
+            if(confirm == "y"):
+                delete_user(user_id, mydb)
+                break
+            else:
+                continue
+        elif choice == 9:
             print(f"Thank you so much for using our system! See you again {username}!")
             break
         else:
