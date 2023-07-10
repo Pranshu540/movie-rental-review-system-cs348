@@ -62,7 +62,7 @@ else:
     print("Homebrew is already installed.")
 
 #use sys
-mydb.cursor().execute("USE sys")
+mydb.cursor().execute("USE sys") # I assume your tables are in the sys database
 
 # Download and extract the TSV file
 url = 'https://datasets.imdbws.com/title.basics.tsv.gz'
