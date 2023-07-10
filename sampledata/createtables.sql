@@ -1,5 +1,5 @@
 CREATE TABLE Movie (
-    mid INT NOT NULL PRIMARY KEY,
+    mid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     genre VARCHAR(30) NOT NULL,
     release_year INT NOT NULL, /* YYYY */
@@ -19,7 +19,7 @@ CREATE TABLE User (
 );
 
 CREATE TABLE Review (
-    uid INT NOT NULL REFERENCES User(uid),
+    uid INT NOT NULL REFERENCES User(uid) AUTO_INCREMENT,
     mid INT NOT NULL REFERENCES Movie(mid),
     review_date DATE NOT NULL, /* 'YYYY-MM-DD' */
     rating INT NOT NULL CHECK(rating BETWEEN 1 and 5), /* Out of 5 stars */
@@ -28,7 +28,7 @@ CREATE TABLE Review (
 );
 
 CREATE TABLE Rental (
-    uid INT NOT NULL REFERENCES User(uid),
+    uid INT NOT NULL REFERENCES User(uid) AUTO_INCREMENT,
     mid INT NOT NULL REFERENCES Movie(mid),
     rent_date DATE NOT NULL, /* 'YYYY-MM-DD' */
     due_date DATE NOT NULL, /* Standard rent period is 2 weeks */
