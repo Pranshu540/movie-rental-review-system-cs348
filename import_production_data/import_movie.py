@@ -110,9 +110,6 @@ try:
     df = df.replace('\\N', pd.NA).dropna()
     df = df.dropna(subset=['title'])
 
-
-
-
     try:
         # Write the DataFrame to the 'Movie' table in the database
         df.to_sql('Movie', con=engine, if_exists='append', index=False)
@@ -123,8 +120,6 @@ try:
 
 except Exception as e:
     print("Error processing the TSV file:", e)
-
-
 
 
 # Export mid data to mid.csv
