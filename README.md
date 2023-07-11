@@ -28,3 +28,7 @@ User Creation and Authentication
 ## Review System:
 - Users can create a review for a movie including a rating and comments
 - After creation users can modify or delete their reviews as desired
+
+## User Deletion:
+- Users can choose to delete their own account after logging in
+- After account deletion all reviews and rentals from the user will be deleted, movie rental quantities will be updated
