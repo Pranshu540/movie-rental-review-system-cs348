@@ -18,6 +18,12 @@ df = pd.DataFrame(columns=['mid', 'rent_date', 'due_date', 'is_active'])
 # Convert the mid column of df_mid to a list
 values = df_mid['mid'].tolist()
 
+# Load uid.csv into a DataFrame
+df_uid = pd.read_csv('uid.csv')
+
+# Convert the uid column of df_uid to a list
+values_uid = df_uid['uid'].tolist()
+
 # Dates for generating rentals
 start_date_active = datetime.date(2023, 7, 4)
 end_date_active = datetime.date(2023, 7, 9)
@@ -48,11 +54,19 @@ def batch_to_sql(df, table_name, engine):
     return df
 
 for mid in values:
+    users = set()
     # Generate active rentals
     rent_date = start_date_active + (end_date_active - start_date_active) * random.random()
     due_date = rent_date + datetime.timedelta(days=7)  # assuming due date is 7 days after rent date
 
+
+    user = random.choice(values_uid)
+    while user in users:
+        user = random.choice(values_uid)
+    users.add(user)
+
     df = df.append({
+        'uid': user,
         'mid': mid, 
         'rent_date': rent_date,
         'due_date': due_date,
@@ -65,8 +79,13 @@ for mid in values:
     for _ in range(num_rentals):
         rent_date = start_date_inactive + (end_date_inactive - start_date_inactive) * random.random()
         due_date = rent_date + datetime.timedelta(days=7)  # assuming due date is 7 days after rent date
+        user = random.choice(values_uid)
+        while user in users:
+            user = random.choice(values_uid)
+        users.add(user)
 
         df = df.append({
+            'uid': user,
             'mid': mid, 
             'rent_date': rent_date,
             'due_date': due_date,

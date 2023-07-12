@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 import random
 import string
 import warnings
+import mysql.connector
 
 import os
 from dotenv import load_dotenv
@@ -11,6 +12,13 @@ db_host = os.getenv("DB_HOST")
 db_user = os.getenv("DB_USER")
 db_password = os.getenv("DB_PASSWORD")
 db_name = os.getenv("DB_NAME")
+
+mydb = mysql.connector.connect(
+    host=db_host,
+    user=db_user,
+    password=db_password,
+    database=db_name
+)
 
 
 
@@ -87,3 +95,21 @@ if not df.empty:
         df.to_sql('User', con=engine, if_exists='append', index=False)
     except Exception as e:
         print(e)
+
+
+def getUid():
+    query = "SELECT uid from User"
+    cursor = mydb.cursor()
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        # Write to csv
+        df = pd.DataFrame(result, columns=['uid'])
+        df.to_csv('uid.csv', index=False)
+        print("Data exported to 'uid.csv' successfully.")
+    except mysql.connector.Error as error:
+        print('There was an error in fetching users:')
+        print(error)
+
+
+getUid()

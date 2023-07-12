@@ -21,6 +21,12 @@ df = pd.DataFrame(columns=['mid', 'review_date', 'rating', 'comment'])
 # Convert the mid column of df_mid to a list
 values = df_mid['mid'].tolist()
 
+# Load uid.csv into a DataFrame
+df_uid = pd.read_csv('uid.csv')
+
+# Convert the uid column of df_uid to a list
+values_uid = df_uid['uid'].tolist()
+
 # Dates for generating reviews
 start_date_review = datetime.date(2020, 1, 1)
 end_date_review = datetime.date(2023, 12, 31)
@@ -56,6 +62,7 @@ for mid in values:
     comment = random.choice(df_comments['comment'].tolist())
 
     df = df.append({
+        'uid': random.choice(values_uid),
         'mid': mid, 
         'review_date': review_date,
         'rating': rating,

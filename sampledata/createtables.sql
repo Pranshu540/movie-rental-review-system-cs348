@@ -18,24 +18,22 @@ CREATE TABLE User (
     PRIMARY KEY (uid)
 );
 
-CREATE TABLE `Review` (
-  `uid` int NOT NULL AUTO_INCREMENT,
-  `mid` int NOT NULL,
-  `review_date` date NOT NULL,
-  `rating` int NOT NULL,
-  `comment` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`uid`,`mid`),
-  CONSTRAINT `review_chk_1` CHECK ((`rating` between 1 and 5))
-) ENGINE=InnoDB AUTO_INCREMENT=9010 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE Review (
+    uid INT NOT NULL REFERENCES User(uid),
+    mid INT NOT NULL REFERENCES Movie(mid),
+    review_date DATE NOT NULL, /* 'YYYY-MM-DD' */
+    rating INT NOT NULL CHECK(rating BETWEEN 1 and 5), /* Out of 5 stars */
+    comment VARCHAR(500),
+    PRIMARY KEY(uid, mid)
+);
 
-
-CREATE TABLE `Rental` (
-  `uid` int NOT NULL AUTO_INCREMENT,
-  `mid` int NOT NULL,
-  `rent_date` date NOT NULL,
-  `due_date` date NOT NULL,
-  `is_active` int NOT NULL,
-  PRIMARY KEY (`uid`,`mid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2353400 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE Rental (
+    uid INT NOT NULL REFERENCES User(uid),
+    mid INT NOT NULL REFERENCES Movie(mid),
+    rent_date DATE NOT NULL, /* 'YYYY-MM-DD' */
+    due_date DATE NOT NULL, /* Standard rent period is 2 weeks */
+    is_active INT NOT NULL, /* 1 if rental is currently active, otherwise 0 */
+    PRIMARY KEY(uid, mid)
+);
 
 
