@@ -1,17 +1,17 @@
-#=====Movie filter=====
-SELECT * FROM Movie WHERE title LIKE ‘%The%’ AND rental_quantity >= 1 AND genre = ‘Drama’
-SELECT * FROM Movie WHERE rental_quantity >= 10 AND genre = ‘Sci-Fi’
+#=====Test Filters=====
+SELECT * FROM Movie WHERE title LIKE "%The%" AND rental_quantity >= 1 AND genre = 'Drama';
+SELECT * FROM Movie WHERE rental_quantity >= 10 AND genre = ‘Sci-Fi’;
 
-#=====Movie rental=====
+#=====Test Rentals=====
 SELECT rental_price FROM Movie WHERE mid = 9;
 
 UPDATE Movie SET rental_quantity = rental_quantity - 1 WHERE mid = 9;
 
-UPDATE User SET wallet = wallet - {rental_price} WHERE uid = 2;
+UPDATE User SET wallet = wallet - rental_price WHERE uid = 2;
 
 INSERT INTO Rental (uid, mid, rent_date, due_date, is_active) VALUES (2, 9, date.today(), date.today() + timedelta(weeks=2), 1);
 
-#=====Movie review=====
+#=====Test Review=====
 # Print the review table
 SELECT * FROM Review;
 
@@ -38,4 +38,3 @@ SELECT EXISTS(SELECT 1 FROM User WHERE username='movielover123' AND password=’
 SELECT EXISTS(SELECT 1 FROM User WHERE username='userName' AND password=’userPassword’);
 INSERT INTO Users(username, password) VALUES ('userName', 'userPassword');
 SELECT EXISTS(SELECT 1 FROM User WHERE username='userName' AND password=’userPassword’);
-
