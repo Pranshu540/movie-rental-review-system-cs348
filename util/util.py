@@ -15,6 +15,7 @@ def print_users(mydb):
         for x in result:
             print(x)
 
+
 def find_user_id(user, mydb):
     query = "SELECT uid FROM User WHERE username=%s"
     user_id = -1
@@ -73,3 +74,18 @@ def find_movie_cost(movieid, mydb):
     finally:
         price_cursor.close()
         return cost
+
+
+def list_genres(mydb):
+    query = "SELECT DISTINCT genre FROM Movie;"
+    cursor = mydb.cursor()
+    genre_list = list()
+    try:
+        cursor.execute(query)
+        genre_list = cursor.fetchall()
+    except mysql.connector.Error as error:
+        print('There was an error in fetching list of genres:')
+        print(error)
+    finally:
+        cursor.close()
+        return genre_list
