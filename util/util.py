@@ -88,4 +88,4 @@ def list_genres(mydb):
         print(error)
     finally:
         cursor.close()
-        return genre_list
+        return list(genre_list)

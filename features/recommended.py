@@ -16,9 +16,9 @@ def choose_genre(userid, genre_list, mydb):
         if choose_genre_cursor.rowcount == 0:
             while True:
                 genre = input(
-                    "Please enter your desired genre to see a recommended list of movies for:"
+                    "Please enter your desired genre to see a recommended list of movies for: "
                 )
-                if genre not in genre_list:
+                if genre.lower() not in genre_list:
                     print("Invalid genre. Please check your spelling of the genre.")
                     continue
                 break
@@ -33,7 +33,8 @@ def choose_genre(userid, genre_list, mydb):
 def create_recommended(username, mydb):
     userid = find_user_id(username, mydb)
     genre_list = list_genres(mydb)
-    genre_list = [s.lower() for s in genre_list]
+    genre_list = list(map(lambda s: s[0].lower(), genre_list))
+    print(genre_list)
     genre = choose_genre(userid, genre_list, mydb)
     query = (
         "CREATE VIEW Recommended AS "
@@ -57,7 +58,7 @@ def create_recommended(username, mydb):
     try:
         cursor.execute(query2)
         result_list = cursor.fetchall()
-        df = pd.DataFrame(result_list, columns=["title", "rental_price", "duration"])
+        df = pd.DataFrame(result_list, columns=["mid", "title", "rental_price", "duration"])
     except mysql.connector.Error as error:
         print("There was an error in selecting from the view:")
         print(error)
@@ -67,10 +68,10 @@ def create_recommended(username, mydb):
     print(f"Recommended movies of genre {genre} for {username}:")
     count = 1
 
-    print("Title Rental_Price Duration")
+    print("   Title Rental_Price Duration")
 
     for val in df.values:
-        print(f"{count}. {val[0]} {val[1]} {val[2]}")
+        print(f"{count}. {val[1]} {val[2]} {val[3]}")
         count += 1
 
     # Ask the user if they want to remove any movies from the recommended list
@@ -92,20 +93,22 @@ def create_recommended(username, mydb):
                     subset_wanted.append(df.iloc[i]["mid"])
 
         query3 = """
-        SELECT * FROM Recommended WHERE mid IN %s)
+        (SELECT * FROM Recommended WHERE mid IN (%s))
         UNION
-        (SELECT * FROM Recommended WHERE mid NOT IN %s
+        (SELECT * FROM Recommended WHERE mid NOT IN (%s)
         ORDER BY RAND() 
         LIMIT 1);
         """
 
         cursor = mydb.cursor()
         try:
-            args = (tuple(subset_wanted), tuple(subset_unwanted))
+            print(f"Subset wanted: {subset_wanted}")
+            print(f"Subset unwanted: {subset_unwanted}")
+            args = (', '.join(str(v) for v in subset_wanted), ', '.join(str(v) for v in subset_unwanted))
             cursor.execute(query3, args)
             result_list = cursor.fetchall()
             df = pd.DataFrame(
-                result_list, columns=["title", "rental_price", "duration"]
+                result_list, columns=["mid", "title", "rental_price", "duration"]
             )
         except mysql.connector.Error as error:
             print("There was an error in selecting from the view:")
@@ -116,10 +119,10 @@ def create_recommended(username, mydb):
         print(f"Recommended movies of genre {genre} for {username}:")
         count = 1
 
-        print("Title Rental_Price Duration")
+        print("   Title Rental_Price Duration")
 
         for val in df.values:
-            print(f"{count}. {val[0]} {val[1]} {val[2]}")
+            print(f"{count}. {val[1]} {val[2]} {val[3]}")
             count += 1
 
     # Drop the view
