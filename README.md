@@ -7,6 +7,10 @@ Run the SQL queries from sampledata/createtables.sql to create the test tables <
 Run the SQL queries from sampledata/populatetables.sql to populate the test tables with data <br />
 If you need to drop the tables you can run the SQL you can run the queries from sampledata/droptables.sql <br />
 
+## Generating Production Dataset: <br />
+IMDB dataset is retreived directly from its link, we have a Python file to <br />
+filter, cleanse and generate production data used by our database. <br />
+
 ## Running the application: <br />
 Edit .env file to set database information <br />
 Run `pip install -r requirements.txt` in the root directory <br />
