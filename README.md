@@ -16,7 +16,7 @@ Run `pip install -r requirements.txt` in the root directory <br />
 Run main.py <br />
 
 ## Supported Features:
-User Creation and Authentication
+## User Creation and Authentication:
 - Users are prompted to login after starting main.py
 - Can create new user or login to existing user
 
