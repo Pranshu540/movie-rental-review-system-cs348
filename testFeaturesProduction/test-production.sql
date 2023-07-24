@@ -42,3 +42,8 @@ SELECT EXISTS(SELECT 1 FROM User WHERE username='HumbleGoat456' AND password='xK
 SELECT EXISTS(SELECT 1 FROM User WHERE username='userName' AND password=’userPassword’);
 INSERT INTO User(username, password) VALUES ('userName', 'userPassword');
 SELECT EXISTS(SELECT 1 FROM User WHERE username='userName' AND password=’userPassword’);
+
+#=====Test User Deletion=====
+DELETE FROM User WHERE uid=4;
+
+SELECT * FROM User;
