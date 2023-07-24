@@ -5,6 +5,7 @@ from features.review import *
 from features.rental import *
 from features.movie_filter import *
 from features.delete_user import *
+from features.recommended import *
 
 load_dotenv()  # load variables from .env file
 
@@ -62,7 +63,8 @@ def main():
         print("6. Remove a review")
         print("7. Modify a review")
         print("8. Delete your account")
-        print("9. Quit")
+        print("9. See recommended movies")
+        print("10. Quit")
         try:
             choice = int(input("Please enter your selection: "))
         except:
@@ -130,6 +132,9 @@ def main():
             else:
                 continue
         elif choice == 9:
+            create_recommended(username, mydb)
+            continue
+        elif choice == 10:
             print(f"Thank you so much for using our system! See you again {username}!")
             break
         else:
