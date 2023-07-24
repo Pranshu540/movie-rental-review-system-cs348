@@ -74,10 +74,10 @@ def create_recommended(username, mydb):
         print(f"{count}. {val[1]} {val[2]} {val[3]}")
         count += 1
 
+    subset_wanted = []
+    subset_unwanted = []
     # Ask the user if they want to remove any movies from the recommended list
     while True:
-        subset_wanted = []
-        subset_unwanted = []
         print(
             "Please enter the number of the movie you would like to remove from the list, or enter 0 to continue:"
         )
@@ -86,15 +86,12 @@ def create_recommended(username, mydb):
             break
         elif remove.isdigit() and int(remove) > 0 and int(remove) <= 5:
             # Add mid of the unwanted movie to the subset_unwanted list
-            subset_unwanted.append(df.iloc[int(remove) - 1]["mid"])
-            # Add mids of the other movies to the subset_wanted list
+            subset_unwanted.append(str(df.iloc[int(remove) - 1]["mid"]))
             for i in range(5):
                 if i != int(remove) - 1:
-                    subset_wanted.append(df.iloc[i]["mid"])
+                    subset_wanted.append(str(df.iloc[i]["mid"]))
 
         query3 = """
-        (SELECT * FROM Recommended WHERE mid IN (%s))
-        UNION
         (SELECT * FROM Recommended WHERE mid NOT IN (%s)
         ORDER BY RAND() 
         LIMIT 1);
@@ -102,14 +99,20 @@ def create_recommended(username, mydb):
 
         cursor = mydb.cursor()
         try:
-            print(f"Subset wanted: {subset_wanted}")
-            print(f"Subset unwanted: {subset_unwanted}")
-            args = (', '.join(str(v) for v in subset_wanted), ', '.join(str(v) for v in subset_unwanted))
+            # print(f"Subset wanted: {subset_wanted}")
+            # print(f"Subset unwanted: {subset_unwanted}")
+            args = (', '.join(subset_unwanted),)
             cursor.execute(query3, args)
             result_list = cursor.fetchall()
-            df = pd.DataFrame(
+            df_new = pd.DataFrame(
                 result_list, columns=["mid", "title", "rental_price", "duration"]
             )
+
+            # get all the row
+
+            # replace remove index with new row
+            df.iloc[int(remove) - 1] = df_new.iloc[0]
+
         except mysql.connector.Error as error:
             print("There was an error in selecting from the view:")
             print(error)
