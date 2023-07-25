@@ -33,7 +33,7 @@ CREATE TABLE Rental (
     rent_date DATE NOT NULL, /* 'YYYY-MM-DD' */
     due_date DATE NOT NULL, /* Standard rent period is 2 weeks */
     is_active INT NOT NULL, /* 1 if rental is currently active, otherwise 0 */
-    PRIMARY KEY(uid, mid)
+    PRIMARY KEY(uid, mid, rent_date)
 );
 
 
