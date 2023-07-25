@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { Input } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 
 interface Movie {
   title: string;
@@ -22,13 +23,7 @@ export class MovieComponent implements OnInit {
 
   posterUrl: string = '';
 
-  @Input() movieTitle: string = '';
-
-  constructor(route: ActivatedRoute, private movieService: MovieService) {
-    // route.params.subscribe(params => this.selectedMovie.title = params['name']);
-  }
-
-  ngOnInit() {
+  reloadMovie() {
     if (this.movieTitle != '') {
       this.movieService.searchMovies(this.movieTitle).subscribe(
         data => {
@@ -42,7 +37,24 @@ export class MovieComponent implements OnInit {
         }
       );
     }
+  }
+
+  @Input() movieTitle: string = '';
+
+  constructor(route: ActivatedRoute, private movieService: MovieService) {
+    // route.params.subscribe(params => this.selectedMovie.title = params['name']);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['movieTitle']) {
+      console.log('movieTitle changed: ', this.movieTitle);
+      this.reloadMovie();
     }
+  }
+
+  ngOnInit() {
+    
+  }
   
 
 }

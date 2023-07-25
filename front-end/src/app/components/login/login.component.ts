@@ -34,7 +34,7 @@ export class LoginComponent {
     console.log(formValue);
 
     const user = this.userList.find((user) => user.username === formValue.username && user.password === formValue.password);
-    const newUser = formValue.newUser === 'true';
+    const newUser = formValue.newUser === 'Yes';
     if (!user && newUser) {
       this.userList.push({username: formValue.username, password: formValue.password});
       this.setSessionData(formValue);
