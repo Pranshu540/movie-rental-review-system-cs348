@@ -15,7 +15,10 @@ import { MatOptionModule } from '@angular/material/core';
 import { SearchComponent } from './components/search/search.component';
 import { MovieComponent } from './components/movie/movie.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { HeaderComponent } from './components/header/header.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -25,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     HomeComponent,
     SearchComponent,
-    MovieComponent
+    MovieComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +42,10 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatOptionModule,
-    HttpClientModule
-
+    HttpClientModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

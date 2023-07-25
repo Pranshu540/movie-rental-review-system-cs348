@@ -5,11 +5,13 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { MovieComponent } from './components/movie/movie.component';
 import { AuthGuard } from './auth.guard';
+import { HeaderComponent } from './components/header/header.component';
 
 const routes: Routes = [
   { path: 'login', component : LoginComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'home', component: SearchComponent, canActivate: [AuthGuard] },
+  { path: 'header', component: HeaderComponent}
   // { path: 'movies/:name', component: MovieComponent }
 ];
 

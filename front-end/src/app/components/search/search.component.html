@@ -1,3 +1,4 @@
+<app-header></app-header>
 <mat-form-field id="search-bar">
     <input type="text" #inputRef placeholder="Search for a movie" aria-label="Number" matInput [formControl]="movieControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
