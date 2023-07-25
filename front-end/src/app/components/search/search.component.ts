@@ -1,31 +1,43 @@
-import { Component } from '@angular/core';
+// search.component.ts
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, startWith, } from 'rxjs/operators';
-import { OnInit } from '@angular/core';
+import { map, startWith } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
+interface Movie {
+  title: string;
+  available: boolean;
+}
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-  movies = [
-    "The Shawshank Redemption",
-    "The Godfather",
-    "The Godfather: Part II",
-    "The Dark Knight",
-    "12 Angry Men",
-    "Schindler's List",
-    "The Lord of the Rings: The Return of the King",
-    "Pulp Fiction",
-    "The Good, the Bad and the Ugly",
-    "Fight Club"
+
+  constructor(
+    private router: Router
+  ) {}
+
+  movies: Movie[] = [
+    {title: "The Shawshank Redemption", available: true},
+    {title: "The Godfather", available: false},
+    {title: "The Godfather: Part II", available: false},
+    {title: "The Dark Knight", available: false},
+    {title: "12 Angry Men", available: false},
+    {title: "Schindler's List", available: false},
+    {title: "The Lord of the Rings: The Return of the King", available: false},
+    {title: "Pulp Fiction", available: false},
+    {title: "The Good, the Bad and the Ugly", available: false},
+    {title: "Fight Club", available: false}
   ];
 
   movieControl = new FormControl();
-  filteredMovies!: Observable<string[]>;
+  filteredMovies!: Observable<Movie[]>;
+  showAvailable: boolean = false;
 
   ngOnInit() {
     this.filteredMovies = this.movieControl.valueChanges
@@ -35,9 +47,31 @@ export class SearchComponent implements OnInit {
       );
   }
 
-  private _filterMovies(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  private _filterMovies(value: string): Movie[] {
+    let filterValue = '';
+  
+    if(value) {
+      filterValue = value.toLowerCase();
+    }
+  
+    // consider 'showAvailable' when filtering the movies
+    let filteredMovies = this.movies.filter(movie => 
+      movie.title.toLowerCase().includes(filterValue) && (!this.showAvailable || movie.available)
+    );
+    // debug
+    console.log('Show available:', this.showAvailable);
+    console.log('Filtered movies:', filteredMovies);
+    return filteredMovies;
+  }
 
-    return this.movies.filter(movie => movie.toLowerCase().includes(filterValue));
+  refreshMovies() {
+    const currentValue = this.movieControl.value;
+    this.movieControl.setValue('a');
+    setTimeout(() => this.movieControl.setValue(currentValue), 0);
+  }
+
+  optionSelected(event: MatAutocompleteSelectedEvent) {
+    const movieTitle = event.option.value;
+    this.router.navigate(['movies', movieTitle]);
   }
 }
