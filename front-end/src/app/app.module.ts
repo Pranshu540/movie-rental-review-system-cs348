@@ -13,6 +13,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { SearchComponent } from './components/search/search.component';
+import { MovieComponent } from './components/movie/movie.component';
 
 
 
@@ -22,7 +23,8 @@ import { SearchComponent } from './components/search/search.component';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    MovieComponent
   ],
   imports: [
     BrowserModule,
