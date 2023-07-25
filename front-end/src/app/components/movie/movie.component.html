@@ -1,1 +1,11 @@
-<p>movie works!</p>
+<div *ngIf="selectedMovie">
+    <h1>{{ selectedMovie.title }}</h1>
+    <img [src]="this.posterUrl" alt="">
+    <p>Genre: {{ selectedMovie.genre }}</p>
+    <p>Price: {{ selectedMovie.price }}</p>
+    <p>Availability: {{ selectedMovie.available ? 'Available' : 'Not available' }}</p>
+    <p>Duration: {{ selectedMovie.duration }}</p>
+    <p>Release Year: {{ selectedMovie.releaseYear }}</p>
+    <button mat-raised-button color="primary">Rent</button>
+  </div>
+  

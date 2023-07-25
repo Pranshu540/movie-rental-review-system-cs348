@@ -9,6 +9,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 interface Movie {
   title: string;
   available: boolean;
+  genre?: string;
 }
 
 @Component({
@@ -23,16 +24,16 @@ export class SearchComponent implements OnInit {
   ) {}
 
   movies: Movie[] = [
-    {title: "The Shawshank Redemption", available: true},
-    {title: "The Godfather", available: false},
-    {title: "The Godfather: Part II", available: false},
-    {title: "The Dark Knight", available: false},
-    {title: "12 Angry Men", available: false},
-    {title: "Schindler's List", available: false},
-    {title: "The Lord of the Rings: The Return of the King", available: false},
-    {title: "Pulp Fiction", available: false},
-    {title: "The Good, the Bad and the Ugly", available: false},
-    {title: "Fight Club", available: false}
+    {title: "The Shawshank Redemption", available: true, genre: "Drama"},
+    {title: "The Godfather", available: false, genre: "Drama"},
+    {title: "The Godfather: Part II", available: false, genre: "Drama"},
+    {title: "The Dark Knight", available: false, genre: "Action"},
+    {title: "12 Angry Men", available: false, genre: "Drama"},
+    {title: "Schindler's List", available: false, genre: "Drama"},
+    {title: "The Lord of the Rings: The Return of the King", available: false, genre: "Adventure"},
+    {title: "Pulp Fiction", available: false, genre: "Drama"},
+    {title: "The Good, the Bad and the Ugly", available: false, genre: "Western"},
+    {title: "Fight Club", available: false, genre: "Drama"},
   ];
 
   movieControl = new FormControl();

@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { SearchComponent } from './components/search/search.component';
 import { MovieComponent } from './components/movie/movie.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -36,7 +37,8 @@ import { MovieComponent } from './components/movie/movie.component';
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatOptionModule
+    MatOptionModule,
+    HttpClientModule
 
   ],
   providers: [],
