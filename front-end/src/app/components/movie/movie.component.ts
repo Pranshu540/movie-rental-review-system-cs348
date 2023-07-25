@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
-
+import { Input } from '@angular/core';
 
 interface Movie {
   title: string;
@@ -22,23 +22,27 @@ export class MovieComponent implements OnInit {
 
   posterUrl: string = '';
 
+  @Input() movieTitle: string = '';
+
   constructor(route: ActivatedRoute, private movieService: MovieService) {
-    route.params.subscribe(params => this.selectedMovie.title = params['name']);
+    // route.params.subscribe(params => this.selectedMovie.title = params['name']);
   }
 
   ngOnInit() {
-    this.movieService.searchMovies(this.selectedMovie.title).subscribe(
-      data => {
-        console.log('Movie data:', data);
-        if (data.results.length > 0) {
-          this.posterUrl = this.movieService.getPosterUrl(data.results[0].poster_path);
-
+    if (this.movieTitle != '') {
+      this.movieService.searchMovies(this.movieTitle).subscribe(
+        data => {
+          console.log('Movie data:', data);
+          if (data.results.length > 0) {
+            this.posterUrl = this.movieService.getPosterUrl(data.results[0].poster_path);
+          }
+        },
+        error => {
+          console.error('Error:', error);
         }
-      },
-      error => {
-        console.error('Error:', error);
-      }
-    );
-  }
+      );
+    }
+    }
+  
 
 }

@@ -23,6 +23,8 @@ export class SearchComponent implements OnInit {
     private router: Router
   ) {}
 
+  movieTitle: string = '';
+
   movies: Movie[] = [
     {title: "The Shawshank Redemption", available: true, genre: "Drama"},
     {title: "The Godfather", available: false, genre: "Drama"},
@@ -72,7 +74,7 @@ export class SearchComponent implements OnInit {
   }
 
   optionSelected(event: MatAutocompleteSelectedEvent) {
-    const movieTitle = event.option.value;
-    this.router.navigate(['movies', movieTitle]);
+    this.movieTitle = event.option.value;
+
   }
 }
