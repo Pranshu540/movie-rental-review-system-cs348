@@ -1,0 +1,9 @@
+<mat-form-field>
+    <input type="text" #inputRef placeholder="Search for a movie" aria-label="Number" matInput [formControl]="movieControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredMovies | async" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+      
+  </mat-form-field>
