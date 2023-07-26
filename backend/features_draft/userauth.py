@@ -1,5 +1,5 @@
 import mysql.connector
-from util import util
+from backend.movie_rental_system.util import util
 
 # instance_user is a dictionary that stores the current user's username and uid
 instance_user = {'username': '', 'uid': ''}

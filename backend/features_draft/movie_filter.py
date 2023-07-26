@@ -1,5 +1,4 @@
-import mysql.connector
-from util.util import *
+from MySQLdb import Error
 
 
 def filter_movies(title_filter, count_filter, genre_filter, mydb):
@@ -33,7 +32,7 @@ def filter_movies(title_filter, count_filter, genre_filter, mydb):
         my_result = cursor.fetchall()
         for x in my_result:
             print(x)
-    except mysql.connector.Error as err:
+    except Error as err:
         print("Something went wrong: {}".format(err))
     finally:
         cursor.close()

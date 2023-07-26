@@ -1,23 +1,23 @@
 import pandas as pd
-# import gzip
-# import shutil
+import gzip
+import shutil
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 import os
-# import subprocess
+import subprocess
 import mysql.connector
 
-# # HELPERS:
-# def is_brew_installed():
-#     try:
-#         subprocess.check_output(['brew', '-v'])
-#         return True
-#     except Exception:
-#         return False
+# HELPERS:
+def is_brew_installed():
+    try:
+        subprocess.check_output(['brew', '-v'])
+        return True
+    except Exception:
+        return False
 
-# def install_brew():
-#     command = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-#     os.system(command)
+def install_brew():
+    command = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+    os.system(command)
 
 def getMid():
     query = "SELECT mid from Movie"
@@ -54,38 +54,37 @@ mydb = mysql.connector.connect(
     database=db_name
 )
 
-# if not is_brew_installed():
-#     print("Homebrew not found. Installing...")
-#     install_brew()
-#     print("Homebrew installed successfully.")
-# else:
-#     print("Homebrew is already installed.")
-
+if not is_brew_installed():
+    print("Homebrew not found. Installing...")
+    install_brew()
+    print("Homebrew installed successfully.")
+else:
+    print("Homebrew is already installed.")
 
 # Download and extract the TSV file
 url = 'https://datasets.imdbws.com/title.basics.tsv.gz'
-gz_file_path = './title.basics.tsv.gz'
-tsv_file_path = './title.basics.tsv'
+gz_file_path = 'title.basics.tsv.gz'
+tsv_file_path = 'title.basics.tsv'
 
-# try:
-#     print("Installing wget using Homebrew...")
-#     subprocess.run(['brew', 'install', 'wget'])
-#     print("wget installed successfully.")
-# except Exception as e:
-#     print(f"Error occurred while installing wget: {e}")
+try:
+    print("Installing wget using Homebrew...")
+    subprocess.run(['brew', 'install', 'wget'])
+    print("wget installed successfully.")
+except Exception as e:
+    print(f"Error occurred while installing wget: {e}")
 
-# try:
-#     print("Downloading the TSV file...")
-#     subprocess.run(['wget', '-O', gz_file_path, url])
-#     print("TSV file downloaded successfully.")
+try:
+    print("Downloading the TSV file...")
+    subprocess.run(['wget', '-O', gz_file_path, url])
+    print("TSV file downloaded successfully.")
 
-#     print("Unpacking the GZ file...")
-#     with gzip.open(gz_file_path, 'rb') as f_in:
-#         with open(tsv_file_path, 'wb') as f_out:
-#             shutil.copyfileobj(f_in, f_out)
-#     print("GZ file unpacked successfully.")
-# except Exception as e:
-#     print(f"Error occurred: {e}")
+    print("Unpacking the GZ file...")
+    with gzip.open(gz_file_path, 'rb') as f_in:
+        with open(tsv_file_path, 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)
+    print("GZ file unpacked successfully.")
+except Exception as e:
+    print(f"Error occurred: {e}")
 
 try:
     # Read the TSV file into a pandas DataFrame
@@ -108,9 +107,6 @@ try:
     df = df.replace('\\N', pd.NA).dropna()
     df = df.dropna(subset=['title'])
 
-
-
-
     try:
         # Write the DataFrame to the 'Movie' table in the database
         df.to_sql('Movie', con=engine, if_exists='append', index=False)
@@ -123,8 +119,6 @@ except Exception as e:
     print("Error processing the TSV file:", e)
 
 
-
-
 # Export mid data to mid.csv
 try:
     # Query to fetch all 'mid' from the 'Movie' table
@@ -134,3 +128,6 @@ try:
     getMid()
 except Exception as e:
     print(f"Error occurred: {e}")
+
+
+

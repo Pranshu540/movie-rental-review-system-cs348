@@ -1,5 +1,4 @@
-import mysql.connector
-from util.util import *
+from backend.movie_rental_system.util.util import *
 from datetime import date
 
 

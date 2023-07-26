@@ -1,8 +1,8 @@
-from util.util import *
+from ..util.util import *
 import pandas as pd
-import mysql.connector
+from MySQLdb import Error
 
-
+# Helper function to select a genre to recommend users
 def choose_genre(userid, genre_list, mydb):
     query = (
         "SELECT m.genre FROM Rental r NATURAL JOIN Movie m WHERE r.uid = %s "
@@ -22,7 +22,7 @@ def choose_genre(userid, genre_list, mydb):
                     print("Invalid genre. Please check your spelling of the genre.")
                     continue
                 break
-    except mysql.connector.Error as error:
+    except Error as error:
         print("There was an error in finding the most rented genre from the database:")
         print(error)
     finally:
@@ -47,7 +47,7 @@ def create_recommended(username, mydb):
     try:
         args = (genre,)
         create_recommended_cursor.execute(query, args)
-    except mysql.connector.Error as error:
+    except Error as error:
         print("There was an error in creating the Recommended view:")
         print(error)
     finally:
@@ -59,7 +59,7 @@ def create_recommended(username, mydb):
         cursor.execute(query2)
         result_list = cursor.fetchall()
         df = pd.DataFrame(result_list, columns=["mid", "title", "rental_price", "duration"])
-    except mysql.connector.Error as error:
+    except Error as error:
         print("There was an error in selecting from the view:")
         print(error)
     finally:
@@ -68,7 +68,7 @@ def create_recommended(username, mydb):
     print(f"Recommended movies of genre {genre} for {username}:")
     count = 1
 
-    print("   Title Rental_Price Duration")
+    print("Title Rental_Price Duration")
 
     for val in df.values:
         print(f"{count}. {val[1]} {val[2]} {val[3]}")
@@ -84,7 +84,7 @@ def create_recommended(username, mydb):
         remove = input()
         if remove == "0":
             break
-        elif remove.isdigit() and int(remove) > 0 and int(remove) <= 5:
+        elif remove.isdigit() and 0 < int(remove) <= 5:
             # Add mid of the unwanted movie to the subset_unwanted list
             subset_unwanted.append(str(df.iloc[int(remove) - 1]["mid"]))
             for i in range(5):
@@ -113,7 +113,7 @@ def create_recommended(username, mydb):
             # replace remove index with new row
             df.iloc[int(remove) - 1] = df_new.iloc[0]
 
-        except mysql.connector.Error as error:
+        except Error as error:
             print("There was an error in selecting from the view:")
             print(error)
         finally:
@@ -133,7 +133,7 @@ def create_recommended(username, mydb):
     cursor = mydb.cursor()
     try:
         cursor.execute(query4)
-    except mysql.connector.Error as error:
+    except Error as error:
         print("There was an error in dropping the Recommended view:")
         print(error)
     finally:
