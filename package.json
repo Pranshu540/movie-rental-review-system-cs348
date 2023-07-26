@@ -1,0 +1,15 @@
+{
+  "name": "movie-rental-review-system-cs348",
+  "version": "1.0.0",
+  "description": "## Creating and loading the sample database: <br /> Using MySQL <br /> Run the SQL queries from sampledata/createtables.sql to create the test tables <br /> Run the SQL queries from sampledata/populatetables.sql to populate the test tables with data <br />",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/cli": "^16.1.5"
+  }
+}
