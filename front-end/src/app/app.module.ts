@@ -19,7 +19,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-
+import { RentalViewComponent } from './components/rental-view/rental-view.component';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MatButtonModule } from '@angular/material/button';
     HomeComponent,
     SearchComponent,
     MovieComponent,
-    HeaderComponent
+    HeaderComponent,
+    RentalViewComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
