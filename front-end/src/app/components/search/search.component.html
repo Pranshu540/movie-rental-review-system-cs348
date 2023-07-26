@@ -6,12 +6,19 @@
           {{ option.title }}
         </mat-option>
       </mat-autocomplete>
-      <div class="label">
+    <div class="label">
         <input type="checkbox" [(ngModel)]="showAvailable" (change)="refreshMovies()" name="Show Available" id="">
         <label for="">Show Available</label>
-      </div>
-      
-  </mat-form-field>
+    </div>
+</mat-form-field>
 
-  <app-movie *ngIf="movieTitle != ''" [movieTitle]="movieTitle"></app-movie>
+<div class="genres">
+  <span>Filter Genres</span>
+<!-- Dropdown for genre selection -->
+<select [(ngModel)]="selectedGenre" (change)="refreshMovies()" name="Genre">
+  <option *ngFor="let genre of genres" [value]="genre">{{genre}}</option>
+</select>
+</div>
 
+
+<app-movie *ngIf="movieTitle != ''" [movieTitle]="movieTitle"></app-movie>

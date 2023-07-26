@@ -9,7 +9,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 interface Movie {
   title: string;
   available: boolean;
-  genre?: string;
+  genre: string;
 }
 
 @Component({
@@ -42,6 +42,12 @@ export class SearchComponent implements OnInit {
   filteredMovies!: Observable<Movie[]>;
   showAvailable: boolean = false;
 
+  // Array for distinct genres
+  genres: string[] = ['Action', 'Drama', 'Adventure']
+
+  // Model for selected genre
+  selectedGenre: string = '';
+
   ngOnInit() {
     this.filteredMovies = this.movieControl.valueChanges
       .pipe(
@@ -56,11 +62,14 @@ export class SearchComponent implements OnInit {
     if(value) {
       filterValue = value.toLowerCase();
     }
-  
-    // consider 'showAvailable' when filtering the movies
+
+    // consider 'showAvailable' and 'selectedGenre' when filtering the movies
     let filteredMovies = this.movies.filter(movie => 
-      movie.title.toLowerCase().includes(filterValue) && (!this.showAvailable || movie.available)
+      movie.title.toLowerCase().includes(filterValue) &&
+      (!this.showAvailable || movie.available) &&
+      (this.selectedGenre === '' || movie.genre === this.selectedGenre)
     );
+
     // debug
     console.log('Show available:', this.showAvailable);
     console.log('Filtered movies:', filteredMovies);
@@ -75,6 +84,5 @@ export class SearchComponent implements OnInit {
 
   optionSelected(event: MatAutocompleteSelectedEvent) {
     this.movieTitle = event.option.value;
-
   }
 }
