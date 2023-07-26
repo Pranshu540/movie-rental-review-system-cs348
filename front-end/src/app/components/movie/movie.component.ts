@@ -23,20 +23,9 @@ export class MovieComponent implements OnInit {
 
   posterUrl: string = '';
 
-  reloadMovie() {
-    if (this.movieTitle != '') {
-      this.movieService.searchMovies(this.movieTitle).subscribe(
-        data => {
-          console.log('Movie data:', data);
-          if (data.results.length > 0) {
-            this.posterUrl = this.movieService.getPosterUrl(data.results[0].poster_path);
-          }
-        },
-        error => {
-          console.error('Error:', error);
-        }
-      );
-    }
+  async reloadMovie() {
+    this.posterUrl = await this.movieService.getMovieImage(this.movieTitle);
+    console.log(this.posterUrl)
   }
 
   @Input() movieTitle: string = '';

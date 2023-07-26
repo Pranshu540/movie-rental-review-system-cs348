@@ -22,6 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RentalViewComponent } from './components/rental-view/rental-view.component';
 import {MatTableModule} from '@angular/material/table';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
+import { CarouselModule } from '@coreui/angular';
+import { IconModule } from '@coreui/icons-angular';
 
 
 @NgModule({
@@ -50,7 +52,10 @@ import { RecommendationsComponent } from './components/recommendations/recommend
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    CarouselModule,
+    IconModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

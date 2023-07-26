@@ -20,4 +20,25 @@ export class MovieService {
   getPosterUrl(posterPath: string): string {
     return `${this.imageUrl}${posterPath}`;
   }
+
+  async getMovieImage(movieTitle: string) {
+    if (movieTitle != '') {
+      try {
+        const data = await this.searchMovies(movieTitle).toPromise();
+
+        console.log('Movie data:', data);
+
+        if (data.results.length > 0) {
+          return this.getPosterUrl(data.results[0].poster_path);
+        } else {
+          return '';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    return '';
+  }
+
 }
