@@ -2,12 +2,16 @@
     <mat-toolbar>
       <span>MovieHub</span>
       <span class="example-spacer"></span>
+      <button mat-icon-button (click)="navigate('recommendations')" class="example-icon">
+        <mat-icon>library_books</mat-icon>
+      </button>
       <button mat-icon-button (click)="navigate('rentals')" class="example-icon">
         <mat-icon>movie</mat-icon>
       </button>
       <button mat-icon-button (click)="navigate('profile')" class="example-icon">
         <mat-icon>account_circle</mat-icon>
       </button>
+
 
     </mat-toolbar>
   </p>

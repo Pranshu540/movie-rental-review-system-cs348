@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RentalViewComponent } from './components/rental-view/rental-view.component';
 import {MatTableModule} from '@angular/material/table';
+import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MatTableModule} from '@angular/material/table';
     SearchComponent,
     MovieComponent,
     HeaderComponent,
-    RentalViewComponent
+    RentalViewComponent,
+    RecommendationsComponent
   ],
   imports: [
     BrowserModule,
