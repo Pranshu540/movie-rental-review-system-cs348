@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+import mysql.connector
 
 
 def rent_movie(user_id, movie_id, mydb):
@@ -28,6 +29,14 @@ def rent_movie(user_id, movie_id, mydb):
         print("User does not have enough balance to rent the movie")
         return
 
+    # Check if the user has rented this movie less than 2 weeks ago
+    record = find_last_matching_rental(user_id, movie_id, mydb)
+    if record is not None:
+        # If the due date has not passed yet
+        if record[2] > date.today():
+            print("User cannot rent the movie again within two weeks of renting it")
+            return
+
     # Start transaction
     cursor.execute("START TRANSACTION")
 
@@ -53,6 +62,21 @@ def rent_movie(user_id, movie_id, mydb):
 
     finally:
         cursor.close()
+
+
+def find_last_matching_rental(uid, mid, mydb):
+    result = None
+    query = "SELECT uid, mid, due_date FROM Rental WHERE uid = %s AND mid = %s ORDER BY due_date DESC LIMIT 1"
+    args = (uid, mid)
+    find_rentals_cursor = mydb.cursor()
+    try:
+        find_rentals_cursor.execute(query, args)
+        result = find_rentals_cursor.fetchone()
+    except mysql.connector.Error as error:
+        print(f"An error occurred: {error}")
+    finally:
+        find_rentals_cursor.close()
+    return result
 
 
 def check_rentals(mydb):
