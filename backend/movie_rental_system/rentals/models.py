@@ -13,7 +13,7 @@ def rent_movie(username, movie_id, mydb):
     if not movie_result:
         return Error("Movie does not exist")
     elif movie_result[0] <= 0:
-        return Error("Movie is not available for rent")
+        return Error("There are no more copies of this movie available to rent.")
 
     cursor.execute(f"SELECT wallet FROM User WHERE uid = {user_id}")
     user_result = cursor.fetchone()
@@ -24,7 +24,7 @@ def rent_movie(username, movie_id, mydb):
     cursor.execute(f"SELECT rental_price FROM Movie WHERE mid = {movie_id}")
     rental_price = cursor.fetchone()[0]
     if user_result[0] < rental_price:
-        return Error("User does not have enough balance to rent the movie")
+        return Error("User does not have enough balance to rent the movie.")
 
     # Start transaction
     cursor.execute("START TRANSACTION")
