@@ -43,20 +43,19 @@ def modify_review(username, moviename, rating, comment, mydb):
         args = (date.today(), rating, comment, userid, movieid)
         update_review_cursor.execute(query, args)
         mydb.connection.commit()
-        return "Review successfully modified."
     except Exception as error:
         return Error('There was an error in updating the review in the database:', error)
     finally:
         update_review_cursor.close()
+        return "Review successfully modified."
 
 
-def check_single_review(username, moviename, mydb):
+def check_single_review(username, movie_id, mydb):
     userid = find_user_id(username, mydb)
-    movieid = find_movie_id(moviename, mydb)
     query = "SELECT rating, comment FROM Review WHERE uid = %s AND mid = %s;"
     check_review_cursor = mydb.cursor()
     try:
-        args = (userid, movieid)
+        args = (userid, movie_id)
         check_review_cursor.execute(query, args)
         result = check_review_cursor.fetchone()
         return result
@@ -74,6 +73,20 @@ def get_movie_reviews(moviename, mydb):
         cursor.execute(query, [movieid])
         result = cursor.fetchall()
         return result
+    except Exception as e:
+        return Error(f"An error occurred: {e}")
+    finally:
+        cursor.close()
+
+
+def does_review_exist(username, movie_id, mydb):
+    user_id = find_user_id(username)
+    query = "SELECT * FROM Review WHERE uid = %s AND mid = %s"
+    try:
+        cursor = mydb.cursor()
+        cursor.execute(query, [user_id, movie_id])
+        result = cursor.fetchall()
+        return True if result else False
     except Exception as e:
         return Error(f"An error occurred: {e}")
     finally:

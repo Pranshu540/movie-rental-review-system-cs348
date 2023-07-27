@@ -3,15 +3,21 @@ from .models import *
 from . import reviews
 
 
-@reviews.route('/create_review/<string:username>/<string:moviename>', methods=['POST'])
-def add_review(username, moviename):
+@reviews.route('/upsert_review/<string:username>/<int:movie_id>', methods=['POST'])
+def upsert_review(username, movie_id):
     try:
         data = request.get_json()
         rating = data['rating']
         comment = data['comment']
         mydb = current_app.config['mysql']
-        create_review(username, moviename, rating, comment, mydb.connection)
-        return jsonify({"message": "Review added successfully."}), 200
+        # check if the review is in the table
+        exists = does_review_exist(username, movie_id, mydb.connection)
+        if exists:
+            modify_review(username, movie_id, rating, comment, mydb.connection)
+            return jsonify({"message": "Review updated successfully."}), 200
+        else:
+            create_review(username, movie_id, rating, comment, mydb.connection)
+            return jsonify({"message": "Review added successfully."}), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
@@ -26,19 +32,6 @@ def delete_review(username, moviename):
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/edit_review/<string:username>/<string:moviename>', methods=['PUT'])
-def edit_review(username, moviename):
-    try:
-        data = request.get_json()
-        rating = data['rating']
-        comment = data['comment']
-        mydb = current_app.config['mysql']
-        modify_review(username, moviename, rating, comment, mydb.connection)
-        return jsonify({"message": "Review updated successfully."}), 200
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
-
-
 @reviews.route('/get_single_review/<string:username>/<string:moviename>', methods=['GET'])
 def get_single_review(username, moviename):
     try:
@@ -49,8 +42,8 @@ def get_single_review(username, moviename):
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/get_movie_review/<string:moviename>', methods=['GET'])
-def get_movie_review(moviename):
+@reviews.route('/get_movie_reviews/<string:moviename>', methods=['GET'])
+def get_movie_reviews(moviename):
     try:
         mydb = current_app.config['mysql']
         reviews = get_movie_reviews(moviename, mydb.connection)
