@@ -1,4 +1,5 @@
-from flask import Blueprint, jsonify, request, current_app
+from flask import jsonify, current_app
+from MySQLdb import Error
 from . import models
 from . import recommended
 

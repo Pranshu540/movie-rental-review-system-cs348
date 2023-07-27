@@ -1,4 +1,5 @@
 from flask import request, jsonify, current_app
+from MySQLdb import Error
 from . import models
 from . import filter_movie
 
@@ -11,10 +12,10 @@ def filter_movies_route():
     genre_filter = request.args.get('genre', default=None, type=str)
 
     # Access your mysql object from the application context
-    mysql = current_app.config['mysql']
-    mydb = mysql.connection
-
-    # Call the filter_movies function
-    result = models.filter_movies(title_filter, count_filter, genre_filter, mydb)
-
-    return jsonify(result)
+    mydb = current_app.config['mysql']
+    try:
+        # Call the filter_movies function
+        result = models.filter_movies(title_filter, count_filter, genre_filter, mydb)
+        return jsonify(result), 200
+    except Error as e:
+        return jsonify({"error": str(e)}), 400
