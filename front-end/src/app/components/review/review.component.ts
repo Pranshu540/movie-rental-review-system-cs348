@@ -20,8 +20,10 @@ export class ReviewComponent {
   constructor(private backendService: BackendCommunicationService) {}
   DATA: Review[] = [
     {username: "MovieBoi", comment: "This movie sux", rating: 1},
-    {username: "FlixBoi", comment: "This movie is good. MovieBoi doesn't understand good movies.", rating: 3}
+    {username: "nj", comment: "This movie is good. MovieBoi doesn't understand good movies.", rating: 3}
   ]
+
+  username: string = sessionStorage.getItem('username')!;
 
   @Input() movieTitle: string = '';
 
@@ -52,6 +54,7 @@ export class ReviewComponent {
       // Refresh the reviews after adding
       this.ngOnChanges({});
     });
+
   }
 
   editReview(): void {
@@ -62,7 +65,7 @@ export class ReviewComponent {
   }
 
   deleteReview(): void {
-    this.backendService.deleteReview(this.newReview.username, this.movieTitle).subscribe(res => {
+    this.backendService.deleteReview(sessionStorage.getItem('username')!, this.movieTitle).subscribe(res => {
       // Refresh the reviews after deleting
       this.ngOnChanges({});
     });
