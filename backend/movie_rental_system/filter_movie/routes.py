@@ -15,7 +15,7 @@ def filter_movies_route():
     mydb = current_app.config['mysql']
     try:
         # Call the filter_movies function
-        result = models.filter_movies(title_filter, count_filter, genre_filter, mydb)
+        result = models.filter_movies(title_filter, count_filter, genre_filter, mydb.connection)
         return jsonify(result), 200
     except Error as e:
         return jsonify({"error": str(e)}), 400

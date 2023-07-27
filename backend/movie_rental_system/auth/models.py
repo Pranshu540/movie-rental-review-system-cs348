@@ -26,7 +26,7 @@ def isLogged():
 ####
 def authenticate(username, password, mydb):
 
-    cursor = mydb.connection.cursor()
+    cursor = mydb.cursor()
     # SELECT EXISTS(SELECT 1 FROM User WHERE username='givenUsername' AND password='givenPassword')
     query = f"SELECT EXISTS(SELECT 1 FROM User WHERE username='{username}' AND password='{password}')"
     cursor.execute(query)
@@ -64,7 +64,7 @@ def signin(username, password, mydb):
 ####
 def signup(username, password, mydb):
     try:
-        cursor = mydb.connection.cursor()
+        cursor = mydb.cursor()
         query = f"INSERT INTO User(username, password) VALUES ('{username}', '{password}')"
         cursor.execute(query)
         mydb.commit()

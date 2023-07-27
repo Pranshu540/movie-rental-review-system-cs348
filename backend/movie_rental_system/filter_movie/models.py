@@ -26,14 +26,12 @@ def filter_movies(title_filter, count_filter, genre_filter, mydb):
         filter_params.append(genre_filter)
 
     try:
-        cursor = mydb.connect.cursor()
+        cursor = mydb.cursor()
         cursor.execute(cmd, filter_params)
 
         my_result = cursor.fetchall()
-        for x in my_result:
-            print(x)
     except Error as err:
-        print("Something went wrong: {}".format(err))
+        return "Something went wrong: {}".format(err)
     finally:
         cursor.close()
         return my_result

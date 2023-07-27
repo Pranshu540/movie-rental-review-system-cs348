@@ -1,10 +1,12 @@
 from MySQLdb import Error
+from ..util.util import find_user_id
 
 
-def delete_user(userid, mydb):
+def delete_user(username, mydb):
+    userid = find_user_id(username, mydb)
     query = f"DELETE FROM user WHERE uid={userid}"
     try:
-        cursor = mydb.connection.cursor()
+        cursor = mydb.cursor()
         cursor.execute(query)
         mydb.commit()
         print("Account Deletion Successful")

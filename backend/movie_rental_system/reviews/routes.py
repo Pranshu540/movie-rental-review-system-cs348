@@ -1,59 +1,59 @@
 from flask import current_app, request, jsonify
-from .models import create_review, remove_review, modify_review, check_single_review, check_all_reviews
+from .models import *
 from . import reviews
 
 
-@reviews.route('/create_review/<userid>/<movieid>', methods=['POST'])
-def add_review(userid, movieid):
+@reviews.route('/create_review/<string:username>/<string:moviename>', methods=['POST'])
+def add_review(username, moviename):
     try:
         data = request.get_json()
         rating = data['rating']
         comment = data['comment']
         mydb = current_app.config['mysql']
-        create_review(userid, movieid, rating, comment, mydb)
+        create_review(username, moviename, rating, comment, mydb.connection)
         return jsonify({"message": "Review added successfully."}), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/remove_review/<userid>/<movieid>', methods=['DELETE'])
-def delete_review(userid, movieid):
+@reviews.route('/remove_review/<string:username>/<string:moviename>', methods=['DELETE'])
+def delete_review(username, moviename):
     try:
         mydb = current_app.config['mysql']
-        remove_review(userid, movieid, mydb)
+        remove_review(username, moviename, mydb.connection)
         return jsonify({"message": "Review deleted successfully."}), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/modify_review/<userid>/<movieid>', methods=['PUT'])
-def edit_review(userid, movieid):
+@reviews.route('/modify_review/<string:username>/<string:moviename>', methods=['PUT'])
+def edit_review(username, moviename):
     try:
         data = request.get_json()
         rating = data['rating']
         comment = data['comment']
         mydb = current_app.config['mysql']
-        modify_review(userid, movieid, rating, comment, mydb)
+        modify_review(username, moviename, rating, comment, mydb.connection)
         return jsonify({"message": "Review updated successfully."}), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/check_review/<userid>/<movieid>', methods=['GET'])
-def get_single_review(userid, movieid):
+@reviews.route('/check_review/<string:username>/<string:moviename>', methods=['GET'])
+def get_single_review(username, moviename):
     try:
         mydb = current_app.config['mysql']
-        review = check_single_review(userid, movieid, mydb)
+        review = check_single_review(username, moviename, mydb.connection)
         return jsonify(review), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/check_all_reviews/<movieid>', methods=['GET'])
-def get_all_reviews(movieid):
+@reviews.route('/get_movie_reviews/<string:moviename>', methods=['GET'])
+def get_movie_reviews(moviename):
     try:
         mydb = current_app.config['mysql']
-        reviews = check_all_reviews(movieid, mydb)
+        reviews = get_movie_reviews(moviename, mydb.connection)
         return jsonify(reviews), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500

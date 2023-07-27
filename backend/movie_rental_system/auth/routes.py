@@ -9,8 +9,8 @@ def signin():
     password = request.json.get('password')
     if not username or not password:
         return jsonify({'error': 'Username and Password required'}), 400
-    db = current_app.config['mysql']
-    success = models.signin(username, password, db)
+    mydb = current_app.config['mysql']
+    success = models.signin(username, password, mydb.connection)
     if success:
         return jsonify({'status': 'success'}), 200
     else:
@@ -23,8 +23,8 @@ def signup():
     password = request.json.get('password')
     if not username or not password:
         return jsonify({'error': 'Username and Password required'}), 400
-    db = current_app.config['mysql']
-    success = models.signup(username, password, db)
+    mydb = current_app.config['mysql']
+    success = models.signup(username, password, mydb.connection)
     if success:
         return jsonify({'status': 'success'}), 200
     else:

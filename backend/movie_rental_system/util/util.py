@@ -3,7 +3,7 @@ import mysql.connector
 
 def print_users(mydb):
     query = "SELECT * FROM User"
-    user_cursor = mydb.connection.cursor()
+    user_cursor = mydb.cursor()
     try:
         user_cursor.execute(query)
         result = user_cursor.fetchall()

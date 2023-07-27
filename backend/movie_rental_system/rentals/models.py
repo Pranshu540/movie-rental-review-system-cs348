@@ -1,32 +1,32 @@
 from datetime import date, timedelta
+from ..util.util import find_user_id, find_movie_id
+
 from MySQLdb import Error
 
 
-def rent_movie(user_id, movie_id, mydb):
-    cursor = mydb.connect.cursor()
+def rent_movie(username, moviename, mydb):
+    cursor = mydb.cursor()
+    user_id = find_user_id(username, mydb)
+    movie_id = find_movie_id(moviename, mydb)
 
     # Check if the user and movie exists and the movie is available for rent
     cursor.execute(f"SELECT rental_quantity FROM Movie WHERE mid = {movie_id}")
     movie_result = cursor.fetchone()
     if not movie_result:
-        print("Movie does not exist")
-        return
+        return Error("Movie does not exist")
     elif movie_result[0] <= 0:
-        print("Movie is not available for rent")
-        return
+        return Error("Movie is not available for rent")
 
     cursor.execute(f"SELECT wallet FROM User WHERE uid = {user_id}")
     user_result = cursor.fetchone()
     if not user_result:
-        print("User does not exist")
-        return
+        return Error("User does not exist")
 
     # Check if the user has enough balance in the wallet to rent the movie
     cursor.execute(f"SELECT rental_price FROM Movie WHERE mid = {movie_id}")
     rental_price = cursor.fetchone()[0]
     if user_result[0] < rental_price:
-        print("User does not have enough balance to rent the movie")
-        return
+        return Error("User does not have enough balance to rent the movie")
 
     # Start transaction
     cursor.execute("START TRANSACTION")
@@ -49,16 +49,20 @@ def rent_movie(user_id, movie_id, mydb):
     except Exception as e:
         # If an error occurred, rollback the transaction
         mydb.rollback()
-        return f"An error occurred: {e}"
+        return Error(f"An error occurred: {e}")
 
     finally:
         cursor.close()
 
 
-def check_rentals(mydb):
+def get_user_rentals(username, mydb):
     cursor = mydb.cursor()
-    cursor.execute("SELECT * FROM Rental")
-    result = cursor.fetchall()
-    for x in result:
-        print(x)
-    cursor.close()
+    try:
+        user_id = find_user_id(username, mydb)
+        cursor.execute(f"SELECT * FROM Rental WHERE uid={user_id}")
+        result = cursor.fetchall()
+        return result
+    except Exception as e:
+        return Error(f"An error occurred: {e}")
+    finally:
+        cursor.close()

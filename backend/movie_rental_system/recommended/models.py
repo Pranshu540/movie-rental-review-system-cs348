@@ -9,7 +9,7 @@ def choose_genre(userid, genre_list, mydb):
         "SELECT m.genre FROM Rental r NATURAL JOIN Movie m WHERE r.uid = %s "
         "GROUP BY m.genre ORDER BY count(m.genre) DESC LIMIT 1;"
     )
-    choose_genre_cursor = mydb.connection.cursor()
+    choose_genre_cursor = mydb.cursor()
     genre = ""
     try:
         choose_genre_cursor.execute(query, (userid,))
