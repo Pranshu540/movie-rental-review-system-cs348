@@ -24,6 +24,7 @@ export class ReviewComponent {
   ]
 
   username: string = sessionStorage.getItem('username')!;
+  isAdmin: boolean = sessionStorage.getItem('isAdmin') === 'true';
 
   @Input() movieTitle: string = '';
 

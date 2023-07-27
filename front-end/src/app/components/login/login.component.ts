@@ -58,7 +58,12 @@ export class LoginComponent {
         }
       })
     ).subscribe();
+
+    // find way to determine if isAdmin from backend
+    sessionStorage.setItem('isAdmin', true.toString());
   }
+
+
 
 }
 

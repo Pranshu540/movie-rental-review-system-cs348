@@ -11,7 +11,7 @@
         <td>{{ review.username }}</td>
         <td>{{ review.comment }}</td>
         <td>{{ review.rating }}</td>
-        <td *ngIf="review.username == this.username">
+        <td *ngIf="review.username == this.username || isAdmin">
           <button (click)="deleteReview()">Delete</button>
         </td>   
       </tr>
