@@ -1,15 +1,17 @@
+<h2>Recommendations</h2>
 <c-carousel *ngIf="this.doneLoading" [animate]="false" [interval]="0">
   <c-carousel-indicators></c-carousel-indicators>
   <c-carousel-inner>
     <c-carousel-item *ngFor="let slide of recommendations">
-      <img
-        alt="{{ slide.title }}"
-        class="d-block w-100"
-        loading="lazy"
-        src="{{ slide.src }}"
-      />
-
-      <h3>{{ slide.title }}</h3>
+      <div class="carousel-image-title">
+        <img
+          alt="{{ slide.title }}"
+          class="d-block w-100"
+          loading="lazy"
+          src="{{ slide.src }}"
+        />
+        <h3>{{ slide.title }}</h3>
+      </div>
     </c-carousel-item>
   </c-carousel-inner>
 

@@ -1,18 +1,31 @@
 .label {
     margin-top: 1rem;
+    font-size: 1.2rem;  /* Increase label size */
+    color: #333;  /* Dark grey color for label */
 }
 
 #search-bar {
     display: flex;
+    padding: 1rem;
+    border-radius: 5px;  /* Rounded corners for search bar */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Subtle shadow for depth */
+    margin-bottom: 2rem;  /* Space below the search bar */
 }
 
 :host {
     height: 100vh;
-    width: 100vh;
+    width: 100vw;  /* Change to vw for full view width */
+    background: #f8f8f8;  /* Light background for contrast */
+    box-sizing: border-box;  /* Include padding and border in element's total width and height */
+    padding-top: 2rem; /* Add padding at the top */
 }
 
 .genres {
     display: flex;
+    flex-wrap: wrap;  /* Allow wrapping of items */
     gap: 1rem;
-    padding: 0.5rem;
+    padding: 1rem;  /* Increase padding for more space */
+    border-radius: 5px;  /* Rounded corners for genre container */
+    background: #fff;  /* White background for contrast */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Subtle shadow for depth */
 }

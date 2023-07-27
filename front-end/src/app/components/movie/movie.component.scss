@@ -2,5 +2,7 @@
     height: 85vh;
     display: flex;
     justify-content: center;
+    align-items: center; /* Align items vertically in the center */
+    gap: 3rem; /* Creates space between child elements */
     margin-top: 3rem;
 }
