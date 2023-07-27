@@ -106,6 +106,9 @@ export class MovieComponent implements OnInit {
     })
     
     this.rentalDataService.setRentals(rentals);
+    let balance = localStorage.getItem('balance')!;
+    balance = (parseInt(balance) - 9.99).toString();
+    localStorage.setItem('balance', balance);
     // let rentals: any = localStorage.getItem(username+'-Rentals');
     // if (rentals) {
     //   rentals = JSON.parse(rentals) as Rental[];
