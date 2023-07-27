@@ -49,8 +49,8 @@ def get_single_review(username, moviename):
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/get_movie_reviews/<string:moviename>', methods=['GET'])
-def get_movie_reviews(moviename):
+@reviews.route('/get_movie_review/<string:moviename>', methods=['GET'])
+def get_movie_review(moviename):
     try:
         mydb = current_app.config['mysql']
         reviews = get_movie_reviews(moviename, mydb.connection)

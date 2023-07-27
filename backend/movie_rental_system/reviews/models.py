@@ -71,7 +71,7 @@ def get_movie_reviews(moviename, mydb):
     query = "SELECT * FROM Review WHERE mid = %s"
     try:
         cursor = mydb.cursor()
-        cursor.execute(query, movieid)
+        cursor.execute(query, [movieid])
         result = cursor.fetchall()
         return result
     except Error as e:

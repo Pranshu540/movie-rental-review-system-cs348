@@ -13,7 +13,7 @@ def create_app():
     app.config['mysql'] = mysql
 
     # Now init app
-    mysql.init_app(app)
+    # mysql.init_app(app)
 
     # import and register blueprints
     from .auth import auth as auth_blueprint

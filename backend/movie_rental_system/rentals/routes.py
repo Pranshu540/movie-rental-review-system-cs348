@@ -13,7 +13,7 @@ def rent_movie_route(username, moviename):
         return jsonify({"error": str(e)}), 400
 
 
-@rentals.route('/rentals/<string:username>', methods=['GET'])
+@rentals.route('/<string:username>', methods=['GET'])
 def get_user_rentals(username):
     try:
         mydb = current_app.config['mysql']
