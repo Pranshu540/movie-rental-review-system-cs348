@@ -44,6 +44,15 @@ export class BackendCommunicationService {
     return this.http.get(`${this.baseUrl}/check_review/${userId}/${movieId}`);
   }
 
+  // TODO
+  getMovieReviews(movieName: string) {
+    return this.http.get(`${this.baseUrl}/get_movie_reviews/${movieName}`);
+  }
+
+  getUserRentals(userName: string) {
+    return this.http.get(`${this.baseUrl}/get_user_rentals/${userName}`);
+  }
+
   getAllReviews() {
     return this.http.get(`${this.baseUrl}/check_all_reviews`);
   }
@@ -62,6 +71,6 @@ export class BackendCommunicationService {
     if (count) params = params.append('count', count.toString());
     if (genre) params = params.append('genre', genre);
 
-    return this.http.get(`${this.baseUrl}/filter_movie`, {params});
+    return this.http.get(`${this.baseUrl}/filter_movie`, {params}) as Observable<Movie[]>
   }
 }
