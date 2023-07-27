@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { Input } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
+import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
 
 interface Movie {
   title: string;
@@ -28,9 +29,13 @@ export class MovieComponent implements OnInit {
     console.log(this.posterUrl)
   }
 
+  canRent: boolean = true;
+
   @Input() movieTitle: string = '';
 
-  constructor(route: ActivatedRoute, private movieService: MovieService) {
+  constructor(route: ActivatedRoute, 
+    private movieService: MovieService,
+    private backendService: BackendCommunicationService) {
     // route.params.subscribe(params => this.selectedMovie.title = params['name']);
   }
 
@@ -42,7 +47,26 @@ export class MovieComponent implements OnInit {
   }
 
   ngOnInit() {
+    // check currently rented movies
+    this.backendService.getUserRentals(sessionStorage.getItem('username')!).subscribe(
+      (value: any) => {
+        alert("User rentals from backend: "+JSON.stringify(value))
+        const data_new = value as string[];
+        if (data_new.includes(this.movieTitle)) {
+          this.canRent = false;
+        }
+      }
+    )
     
+  }
+
+  rentMovie() {
+    alert('Renting movie: ' + this.movieTitle);
+    this.backendService.rentMovieByName(sessionStorage.getItem('username')!, this.movieTitle).subscribe(
+      (value: any) => {
+        alert("rent movie from backend: "+JSON.stringify(value));
+      }
+    )
   }
   
 
