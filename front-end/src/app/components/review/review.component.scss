@@ -1,0 +1,18 @@
+table {
+    width: 75%; // make the table take the full width of its container
+    border-collapse: collapse; // make borders join
+  }
+  
+  th, td {
+    text-align: left; // align the text to the left
+    padding: 8px; // add some padding to all cells
+
+  }
+
+  :host {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
