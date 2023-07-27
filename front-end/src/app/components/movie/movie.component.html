@@ -6,6 +6,9 @@
     <p>Availability: {{ selectedMovie.available ? 'Available' : 'Not available' }}</p>
     <p>Duration: {{ selectedMovie.duration }}</p>
     <p>Release Year: {{ selectedMovie.releaseYear }}</p>
-    <button mat-raised-button color="primary" [disabled]="!canRent" (click)="rentMovie()">Rent</button>
+    <button mat-raised-button color="primary" [disabled]="!canRent" (click)="rentMovie()">
+      {{ canRent ? 'Rent' : 'Rented' }}
+    </button>
+    
   </div>
   
