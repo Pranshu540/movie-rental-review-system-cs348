@@ -53,6 +53,7 @@ def get_single_review(userid, movieid):
 def get_all_reviews():
     try:
         mydb = current_app.config['mysql']
+        print(current_app.config)
         reviews = check_all_reviews(mydb)
         return jsonify(reviews), 200
     except Exception as e:

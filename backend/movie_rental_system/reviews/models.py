@@ -61,7 +61,7 @@ def check_single_review(userid, movieid, mydb):
 
 
 def check_all_reviews(mydb):
-    cursor = mydb.cursor()
+    cursor = mydb.connection.cursor()
     cursor.execute("SELECT * FROM Review")
     result = cursor.fetchall()
     for x in result:
