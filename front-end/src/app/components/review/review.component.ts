@@ -45,13 +45,15 @@ export class ReviewComponent implements OnInit{
     
   }
 
-  username: string = localStorage.getItem('username')!;
+  showForm!: boolean;
+  username: string = sessionStorage.getItem('username')!;
 
   @Input() movieTitle: string = '';
 
   ngOnChanges(changes: SimpleChanges, force=false) {
     if (changes['movieTitle'] || force) {
       console.log('movieTitle changed from Review: ', this.movieTitle);
+      this.showForm = localStorage.getItem(this.username+" reviewed "+this.movieTitle) === null;
       // fetch comments for that move and update DATA
 
       // this.backendService.getMovieReviews(this.movieTitle).subscribe(
@@ -90,7 +92,7 @@ export class ReviewComponent implements OnInit{
   }
 
   newReview: Review = {
-    username: localStorage.getItem('username')!,
+    username: sessionStorage.getItem('username')!,
     comment: '',
     rating: 3
   }
@@ -100,9 +102,12 @@ export class ReviewComponent implements OnInit{
     //   // Refresh the reviews after adding
     //   this.ngOnChanges({}, true);
     // });
-    this.DATA.push(this.newReview);
+    this.DATA = this.DATA.filter(review => review.username !== this.newReview.username);
+    const data_copy = JSON.parse(JSON.stringify(this.newReview));
+    this.DATA.push(data_copy);
     localStorage.setItem(this.movieTitle!+'-reviews', JSON.stringify(this.DATA));
-
+    localStorage.setItem(this.username+" reviewed "+this.movieTitle, 'true')
+    this.showForm = false;
   }
 
   editReview(): void {
@@ -119,6 +124,10 @@ export class ReviewComponent implements OnInit{
     // });
     this.DATA = this.DATA.filter(review => review.username !== username);
     localStorage.setItem(this.movieTitle!+'-reviews', JSON.stringify(this.DATA));
+    localStorage.removeItem(this.username+" reviewed "+this.movieTitle)
+    if (username === this.username) {
+      this.showForm = true;
+    }
   }
 
 }

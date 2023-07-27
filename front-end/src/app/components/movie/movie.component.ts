@@ -44,12 +44,12 @@ export class MovieComponent implements OnInit {
     // route.params.subscribe(params => this.selectedMovie.title = params['name']);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges) {
     
     if (changes['movieTitle']) {
       const username = localStorage.getItem('username')!;
       console.log('movieTitle changed: ', this.movieTitle);
-      this.reloadMovie();
+      await this.reloadMovie();
       if (localStorage.getItem(this.movieTitle+'-available'+username) === 'false') {
         this.canRent = false;
       }
@@ -57,22 +57,18 @@ export class MovieComponent implements OnInit {
       this.selectedMovie.title = this.movieTitle;
       this.selectedMovie.genre = 'Action';
       this.selectedMovie.price = 5;
-      while (true) {
-        if (!(localStorage.getItem(this.movieTitle+"-runtime"))) {
-          timeout(1000);
-        }
+      if (localStorage.getItem(this.movieTitle+"-runtime")) {
         const minutes = parseInt(localStorage.getItem(this.movieTitle+"-runtime")!);
         // format in hours and minutes
         const formatted_minutes = Math.floor(minutes/60) + 'h' +minutes%60 + ' minutes';
         this.selectedMovie.duration = formatted_minutes;
-        break;
-
       }
-      if (localStorage.getItem(this.movieTitle+"-release_date")) {
+      if ((localStorage.getItem(this.movieTitle+"-release_date"))) {
         this.selectedMovie.releaseYear = localStorage.getItem(this.movieTitle+"-release_date")!;
         // get everything before first '-'
         this.selectedMovie.releaseYear = this.selectedMovie.releaseYear.split('-')[0];
       }
+
     }
   }
 

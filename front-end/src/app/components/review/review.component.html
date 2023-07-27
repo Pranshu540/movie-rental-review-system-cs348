@@ -11,14 +11,15 @@
         <td>{{ review.username }}</td>
         <td>{{ review.comment }}</td>
         <td>{{ review.rating }}</td>
-        <td *ngIf="review.username == this.username || isAdmin">
-          <button (click)="deleteReview(review.username)">Delete</button>
+        <td>
+          <button *ngIf="(review.username == this.username) || isAdmin" (click)="deleteReview(review.username)">Delete</button>
+          <button *ngIf="!showForm && (review.username == this.username)" (click)="showForm = true">Modify</button>
         </td>   
       </tr>
     </tbody>
   </table>
 
-  <form #reviewForm="ngForm">
+  <form #reviewForm="ngForm" *ngIf="showForm">
     <label for="comment">Comment:</label>
     <input type="text" id="comment" [(ngModel)]="newReview.comment" name="comment">
     <label for="rating">Rating:</label>
