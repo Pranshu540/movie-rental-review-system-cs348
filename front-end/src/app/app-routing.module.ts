@@ -8,6 +8,7 @@ import { AuthGuard } from './auth.guard';
 import { HeaderComponent } from './components/header/header.component';
 import { RentalViewComponent } from './components/rental-view/rental-view.component';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
+import { ReviewComponent } from './components/review/review.component';
 
 const routes: Routes = [
   { path: 'login', component : LoginComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'home', component: SearchComponent, canActivate: [AuthGuard] },
   { path: 'header', component: HeaderComponent},
   {path: 'rentals', component: RentalViewComponent},
-  {path: 'recommendations', component: RecommendationsComponent}
+  {path: 'recommendations', component: RecommendationsComponent},
+  { path: 'reviews', component: ReviewComponent}
   // { path: 'movies/:name', component: MovieComponent }
 ];
 

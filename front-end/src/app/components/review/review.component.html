@@ -1,0 +1,17 @@
+<table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Comment</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let review of DATA">
+        <td>{{ review.username }}</td>
+        <td>{{ review.comment }}</td>
+        <td>{{ review.rating }}</td>
+      </tr>
+    </tbody>
+  </table>
+  

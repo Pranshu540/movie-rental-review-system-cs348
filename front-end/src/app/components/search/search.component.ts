@@ -36,6 +36,7 @@ export class SearchComponent implements OnInit {
     {title: "Pulp Fiction", available: false, genre: "Drama"},
     {title: "The Good, the Bad and the Ugly", available: false, genre: "Western"},
     {title: "Fight Club", available: false, genre: "Drama"},
+    {title: "Barbie", available: false, genre: "Drama"}
   ];
 
   movieControl = new FormControl();

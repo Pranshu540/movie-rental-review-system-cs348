@@ -24,6 +24,7 @@ import {MatTableModule} from '@angular/material/table';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 import { CarouselModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
+import { ReviewComponent } from './components/review/review.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { IconModule } from '@coreui/icons-angular';
     MovieComponent,
     HeaderComponent,
     RentalViewComponent,
-    RecommendationsComponent
+    RecommendationsComponent,
+    ReviewComponent
   ],
   imports: [
     BrowserModule,
