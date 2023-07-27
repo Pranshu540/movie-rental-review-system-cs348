@@ -16,9 +16,14 @@ export class LoginComponent {
 
   constructor(private router: Router, private backendService: BackendCommunicationService){
     if (localStorage.getItem('userList')) {
-      this.userList = JSON.parse(localStorage.getItem('userList')!);
+
+      const userList = JSON.parse(localStorage.getItem('userList')!);
+      
+      if (userList.length > 0) {
+        this.userList = userList;
+      }
     }
-    if (sessionStorage.getItem('username') && localStorage.getItem('password')) {
+    if (sessionStorage.getItem('username') && sessionStorage.getItem('password')) {
       console.log('Already logged in');
       this.router.navigate(['home']);
     }
@@ -36,6 +41,7 @@ export class LoginComponent {
   
   userList: User[] = [{username: 'nj', password: 'nj'}]; // TODO: replace with API call
   async submit(formValue: any) {
+    
     console.log(formValue);
     let user = this.userList.find(user => user.username === formValue.username && user.password === formValue.password);
 

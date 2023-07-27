@@ -10,7 +10,9 @@ export class MovieService {
   tmdbUrl = 'https://api.themoviedb.org/3';
   imageUrl = 'https://image.tmdb.org/t/p/w500';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.searchMovies("Barbie")
+   }
 
   searchById(id: number): Observable<any> {
     const searchUrl = `${this.tmdbUrl}/movie/${id}?api_key=${this.apiKey}`;
@@ -25,10 +27,10 @@ export class MovieService {
       if (data.results) {
         const result: any = data.results[0]
         // console.log(JSON.stringify(result));
-        sessionStorage.setItem(query+"-release_date", result.release_date);
+        localStorage.setItem(query+"-release_date", result.release_date);
         this.searchById(result.id).subscribe((data: any) => {
           console.log(JSON.stringify(data));
-          sessionStorage.setItem(query+"-runtime", data.runtime);
+          localStorage.setItem(query+"-runtime", data.runtime);
         });
         
 

@@ -54,15 +54,15 @@ export class MovieComponent implements OnInit {
       this.selectedMovie.title = this.movieTitle;
       this.selectedMovie.genre = 'Action';
       this.selectedMovie.price = 5;
-      if (sessionStorage.getItem(this.movieTitle+"-runtime")) {
-        const minutes = parseInt(sessionStorage.getItem(this.movieTitle+"-runtime")!);
+      if (localStorage.getItem(this.movieTitle+"-runtime")) {
+        const minutes = parseInt(localStorage.getItem(this.movieTitle+"-runtime")!);
         // format in hours and minutes
         const formatted_minutes = Math.floor(minutes/60) + 'h' +minutes%60 + ' minutes';
         this.selectedMovie.duration = formatted_minutes;
 
       }
-      if (sessionStorage.getItem(this.movieTitle+"-release_date")) {
-        this.selectedMovie.releaseYear = sessionStorage.getItem(this.movieTitle+"-release_date")!;
+      if (localStorage.getItem(this.movieTitle+"-release_date")) {
+        this.selectedMovie.releaseYear = localStorage.getItem(this.movieTitle+"-release_date")!;
         // get everything before first '-'
         this.selectedMovie.releaseYear = this.selectedMovie.releaseYear.split('-')[0];
       }
@@ -101,6 +101,7 @@ export class MovieComponent implements OnInit {
       rental_start_date: new Date(),
       rental_end_date: new Date('August 8, 2023 03:24:00')
     })
+    
     this.rentalDataService.setRentals(rentals);
     // let rentals: any = localStorage.getItem(username+'-Rentals');
     // if (rentals) {

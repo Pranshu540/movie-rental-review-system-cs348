@@ -17,7 +17,7 @@ export interface Review {
   styleUrls: ['./review.component.scss']
 })
 export class ReviewComponent implements OnInit{
-  isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+  isAdmin = localStorage.getItem('isAdmin') === 'true';
   DATA: Review[] = []
   constructor(private backendService: BackendCommunicationService) {}
   ngOnInit() {

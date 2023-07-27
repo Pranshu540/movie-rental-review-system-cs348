@@ -13,18 +13,18 @@ export class AdminComponent {
 
   onDeleteUser() {
     if (this.username.trim() === '') {
-      alert('Username is required.');
+      
       return;
     }
 
     // this.backendService.deleteUser(this.username).subscribe(
     //   () => {
-    //     alert('User deleted successfully.');
+    //     
     //   },
     //   (error: any) => {
     //     // Handle any errors here
     //     console.error('Error deleting user:', error);
-    //     alert('There was an error deleting the user. Please try again.');
+    //     
     //   }
     // );
 

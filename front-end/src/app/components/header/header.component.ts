@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   constructor(private router: Router) {}
+  isAdmin: boolean = sessionStorage.getItem('isAdmin') === 'true';
   navigate(location: string) {
     
     this.router.navigate([location]);

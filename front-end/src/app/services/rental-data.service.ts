@@ -11,13 +11,16 @@ export class RentalDataService {
   
   getRentals() { 
     const username = sessionStorage.getItem('username');
-    this.rentals = localStorage.getItem(username+'-rentals') ? JSON.parse(localStorage.getItem('rentals')!) : [];
+    if (localStorage.getItem(username+'-rentals')) {
+      this.rentals = JSON.parse(localStorage.getItem(username+'-rentals')!);
+      
+    }
     return this.rentals;
   }
 
   setRentals(rentals: Rental[]) {
-    const username = sessionStorage.getItem('username');
-    this.rentals = rentals;
-    localStorage.setItem(username+'-rentals', JSON.stringify(this.rentals));
+    const username = localStorage.getItem('username');
+    this.rentals = localStorage.getItem(username+'-rentals') ? JSON.parse(localStorage.getItem('rentals')!) : [];
+    localStorage.setItem(username+'-rentals', JSON.stringify(rentals));
   }
 }
