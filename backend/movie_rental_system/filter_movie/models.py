@@ -1,3 +1,6 @@
+from MySQLdb import Error
+
+
 def filter_movies(title_filter, count_filter, genre_filter, mydb):
     filter_params = []
     cmd = "SELECT * FROM Movie"
@@ -23,7 +26,7 @@ def filter_movies(title_filter, count_filter, genre_filter, mydb):
         filter_params.append(genre_filter)
 
     try:
-        cursor = mydb.cursor()
+        cursor = mydb.connect.cursor()
         cursor.execute(cmd, filter_params)
 
         my_result = cursor.fetchall()

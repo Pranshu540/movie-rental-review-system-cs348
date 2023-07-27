@@ -4,7 +4,7 @@ from datetime import date
 
 def create_review(userid, movieid, rating, comment, mydb):
     query = "INSERT INTO Review VALUES(%s, %s, %s, %s, %s)"
-    create_review_cursor = mydb.cursor()
+    create_review_cursor = mydb.connection.cursor()
     try:
         args = (userid, movieid, date.today(), rating, comment)
         create_review_cursor.execute(query, args)
@@ -19,10 +19,10 @@ def create_review(userid, movieid, rating, comment, mydb):
 
 def remove_review(userid, movieid, mydb):
     query = "DELETE FROM Review WHERE uid = %s AND mid = %s"
-    remove_review_cursor = mydb.cursor()
+    remove_review_cursor = mydb.connection.cursor()
     try:
         remove_review_cursor.execute(query, (userid, movieid))
-        mydb.commit()
+        mydb.connection.commit()
     except mysql.connector.Error as error:
         print('There was an error in removing the review from the database:')
         print(error)
@@ -32,12 +32,12 @@ def remove_review(userid, movieid, mydb):
 
 def modify_review(userid, movieid, rating, comment, mydb):
     query = "UPDATE Review SET review_date = %s, rating = %s, comment = %s WHERE uid = %s AND mid = %s"
-    update_review_cursor = mydb.cursor()
+    update_review_cursor = mydb.connection.cursor()
     try:
         args = (date.today(), rating, comment, userid, movieid)
         update_review_cursor.execute(query, args)
 
-        mydb.commit()
+        mydb.connection.commit()
     except mysql.connector.Error as error:
         print('There was an error in updating the review in the database:')
         print(error)
@@ -47,7 +47,7 @@ def modify_review(userid, movieid, rating, comment, mydb):
 
 def check_single_review(userid, movieid, mydb):
     query = "SELECT rating, comment FROM Review WHERE uid = %s AND mid = %s;"
-    check_review_cursor = mydb.cursor()
+    check_review_cursor = mydb.connection.cursor()
     try:
         args = (userid, movieid)
         check_review_cursor.execute(query, args)
@@ -61,9 +61,13 @@ def check_single_review(userid, movieid, mydb):
 
 
 def check_all_reviews(mydb):
-    cursor = mydb.connection.cursor()
-    cursor.execute("SELECT * FROM Review")
-    result = cursor.fetchall()
-    for x in result:
-        print(x)
-    cursor.close()
+    try:
+        cursor = mydb.connection.cursor()
+        cursor.execute("SELECT * FROM Review")
+        result = cursor.fetchall()
+        cursor.close()
+        return result
+    except Error as e:
+        print(f"An error occurred: {error}")
+
+
