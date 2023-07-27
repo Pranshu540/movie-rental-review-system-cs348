@@ -19,7 +19,7 @@ export class RentalDataService {
   }
 
   setRentals(rentals: Rental[]) {
-    const username = localStorage.getItem('username');
+    const username = sessionStorage.getItem('username');
     this.rentals = localStorage.getItem(username+'-rentals') ? JSON.parse(localStorage.getItem('rentals')!) : [];
     localStorage.setItem(username+'-rentals', JSON.stringify(rentals));
   }
