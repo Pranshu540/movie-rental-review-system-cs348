@@ -1,3 +1,4 @@
+<h2>Reviews for {{ movieTitle }}</h2>
 <table>
     <thead>
       <tr>
@@ -14,7 +15,7 @@
         <td>
           <button *ngIf="(review.username == this.username) || isAdmin" (click)="deleteReview(review.username)">Delete</button>
           <button *ngIf="!showForm && (review.username == this.username)" (click)="showForm = true">Modify</button>
-        </td>   
+        </td>
       </tr>
     </tbody>
   </table>
@@ -26,4 +27,3 @@
     <input type="number" id="rating" [(ngModel)]="newReview.rating" name="rating" min="1" max="5">
     <button (click)="addReview()">Add Review</button>
   </form>
-  

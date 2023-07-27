@@ -1,23 +1,65 @@
 table {
-    width: 75%; // make the table take the full width of its container
-    border-collapse: collapse; // make borders join
-  }
-  
-  th, td {
-    text-align: left; // align the text to the left
-    padding: 8px; // add some padding to all cells
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    margin-bottom: 1rem;
+}
 
-  }
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
 
-  :host {
+th {
+    background-color: #4CAF50; /* Change as per your color scheme */
+    color: white;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;} /* Zebra striping for rows */
+
+tr:hover {background-color: #ddd;} /* Hover effect for rows */
+
+:host {
     display: flex;
     flex-direction: column;
-    width: 100%;
     justify-content: center;
     align-items: center;
-    padding: 5rem;
-  }
-  
-  form {
+    padding: 3rem;
+    height: 100%;
+}
+
+
+form {
     margin-top: 3rem;
-  }
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background: #f7f7f7; /* light grey background */
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* subtle shadow */
+    width: 80%;
+    max-width: 600px; /* or whatever max width you prefer */
+    display: flex;
+    flex-direction: column;
+}
+
+form input, form select, form textarea {
+    margin-bottom: 1rem; /* space out your inputs */
+    padding: 0.5rem; /* padding inside inputs */
+    border: 1px solid #ddd; /* subtle border around inputs */
+    border-radius: 0.3rem; /* slightly round input corners */
+}
+
+form button {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background: #007BFF; /* bootstrap primary color for the button */
+    border: none;
+    border-radius: 0.3rem;
+    transition: background 0.3s;
+}
+
+form button:hover {
+    background: #0056b3; /* darken button color on hover */
+}
