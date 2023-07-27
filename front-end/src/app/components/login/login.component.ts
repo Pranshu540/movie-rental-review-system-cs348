@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
+import { tap } from 'rxjs/operators';
 
 interface User {
   username: string;
@@ -32,26 +33,32 @@ export class LoginComponent {
   
   
   userList: User[] = [{username: 'nj', password: 'nj'}]; // TODO: replace with API call
-  async submit(formValue: any) {
+  
+
+  submit(formValue: any) {
     console.log(formValue);
-    let user = true;
-    await this.backendService.signin(formValue.username, formValue.password).subscribe(
-      (value: any) => {
-        alert("user exists? from db: "+value)
-        if (typeof(value) === "boolean") user = value
-      }
-    )
     const newUser = formValue.newUser === 'Yes';
-    if (!user && newUser) {
-      this.backendService.signup(formValue.username, formValue.password);
-      this.setSessionData(formValue);
-    } else if (!user && !newUser) {
-      alert('User not found');
-    } else if (user && newUser) {
-      alert('User already exists');
-    } else {
-      this.setSessionData(formValue);
-    }
+
+    this.backendService.signin(formValue.username, formValue.password).pipe(
+      tap((value: any) => {
+        alert("user exists? from db: " + value);
+        let userExists: boolean = false;
+        if (typeof (value) === "boolean") userExists = value;
+
+        if (!userExists && newUser) {
+          this.backendService.signup(formValue.username, formValue.password).subscribe(() => {
+            this.setSessionData(formValue);
+          });
+        } else if (!userExists && !newUser) {
+          alert('User not found');
+        } else if (userExists && newUser) {
+          alert('User already exists');
+        } else {
+          this.setSessionData(formValue);
+        }
+      })
+    ).subscribe();
   }
+
 }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
 import { MovieService } from 'src/app/services/movie.service';
 
 export interface RecommendationSlide {
@@ -29,7 +30,8 @@ export class RecommendationsComponent implements OnInit {
     this.recommendationMovieNames[this.index] = "Barbie"
     this.loadMovieRecommendations();
   }
-  constructor(private movieSerivce: MovieService) {}
+  constructor(private movieSerivce: MovieService,
+    private backendService: BackendCommunicationService) {}
 
   doneLoading: boolean = false;
 
@@ -59,13 +61,13 @@ export class RecommendationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recommendationMovieNames = [
-      'The Dark Knight',
-      'The Godfather',
-      '12 Angry Men',
-      'The Shawshank Redemption',
-      "Schindler's List",
-    ];
-    this.loadMovieRecommendations();
+    this.backendService.getRecommendedMovies(sessionStorage.getItem('username')!).subscribe(
+      (data: any) => {
+        alert("User recommendations from backend: "+JSON.stringify(data))
+        this.recommendationMovieNames = data as string[];
+        this.loadMovieRecommendations();
+      }
+    )
   }
+  
 }
