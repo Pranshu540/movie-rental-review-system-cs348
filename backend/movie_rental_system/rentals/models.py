@@ -3,10 +3,9 @@ from ..util.util import find_user_id, find_movie_id
 from MySQLdb import Error
 
 
-def rent_movie(username, moviename, mydb):
+def rent_movie(username, movie_id, mydb):
     cursor = mydb.cursor()
     user_id = find_user_id(username, mydb)
-    movie_id = find_movie_id(moviename, mydb)
 
     # Check if the user and movie exists and the movie is available for rent
     cursor.execute(f"SELECT rental_quantity FROM Movie WHERE mid = {movie_id}")
