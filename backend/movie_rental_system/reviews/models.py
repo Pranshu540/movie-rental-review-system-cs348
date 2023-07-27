@@ -1,5 +1,6 @@
 from ..util.util import *
 from datetime import date
+from MySQLdb import Error
 
 
 def create_review(userid, movieid, rating, comment, mydb):
@@ -60,14 +61,15 @@ def check_single_review(userid, movieid, mydb):
         check_review_cursor.close()
 
 
-def check_all_reviews(mydb):
+def check_all_reviews(movieid, mydb):
+    query = "SELECT * FROM Review WHERE mid = %s"
     try:
         cursor = mydb.connection.cursor()
-        cursor.execute("SELECT * FROM Review")
+        cursor.execute(query, movieid)
         result = cursor.fetchall()
         cursor.close()
         return result
     except Error as e:
-        print(f"An error occurred: {error}")
+        print(f"An error occurred: {e}")
 
 

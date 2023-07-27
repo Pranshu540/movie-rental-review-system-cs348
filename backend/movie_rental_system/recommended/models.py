@@ -24,8 +24,7 @@ def choose_genre(userid, genre_list, mydb):
                     continue
                 break
     except Error as error:
-        print("There was an error in finding the most rented genre from the database:")
-        print(error)
+        return "There was an error in finding the most rented genre from the database", error
     finally:
         choose_genre_cursor.close()
         return genre
@@ -108,8 +107,6 @@ def create_recommended(username, mydb):
             df_new = pd.DataFrame(
                 result_list, columns=["mid", "title", "rental_price", "duration"]
             )
-
-            # get all the row
 
             # replace remove index with new row
             df.iloc[int(remove) - 1] = df_new.iloc[0]

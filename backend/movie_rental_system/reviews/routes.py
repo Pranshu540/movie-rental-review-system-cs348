@@ -49,12 +49,11 @@ def get_single_review(userid, movieid):
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/check_all_reviews', methods=['GET'])
-def get_all_reviews():
+@reviews.route('/check_all_reviews/<movieid>', methods=['GET'])
+def get_all_reviews(movieid):
     try:
         mydb = current_app.config['mysql']
-        print(current_app.config)
-        reviews = check_all_reviews(mydb)
+        reviews = check_all_reviews(movieid, mydb)
         return jsonify(reviews), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500

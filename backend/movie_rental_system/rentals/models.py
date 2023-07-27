@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from MySQLdb import Error
 
 
 def rent_movie(user_id, movie_id, mydb):
@@ -43,12 +44,12 @@ def rent_movie(user_id, movie_id, mydb):
 
         # Commit the transaction
         mydb.commit()
-        print("Movie rented successfully")
+        return "Movie rented successfully"
 
     except Exception as e:
         # If an error occurred, rollback the transaction
         mydb.rollback()
-        print(f"An error occurred: {e}")
+        return f"An error occurred: {e}"
 
     finally:
         cursor.close()

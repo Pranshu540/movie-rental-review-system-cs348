@@ -1,5 +1,5 @@
-import mysql.connector
 from ..util.util import *
+from MySQLdb import Error
 
 # instance_user is a dictionary that stores the current user's username and uid
 instance_user = {'username': '', 'uid': ''}
@@ -47,7 +47,7 @@ def signin(username, password, mydb):
         print("Login successful.")
         print("Welcome, " + username + "!")
         instance_user['username'] = username
-        instance_user['uid'] = util.find_user_id(username, mydb)
+        instance_user['uid'] = find_user_id(username, mydb)
         return True
     else:
         # login failed
@@ -68,9 +68,8 @@ def signup(username, password, mydb):
         query = f"INSERT INTO User(username, password) VALUES ('{username}', '{password}')"
         cursor.execute(query)
         mydb.commit()
-        print("User created successfully.")
-        return True
+        return "User created successfully"
 
-    except mysql.connector.Error as error:
+    except Error as error:
         print("Error creating user: {}".format(error))
         return False
