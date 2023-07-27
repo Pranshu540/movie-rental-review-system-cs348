@@ -3,7 +3,7 @@ from .models import rent_movie, get_user_rentals
 from . import rentals
 
 
-@rentals.route('/<string:username>/rent_movie/<string:moviename>', methods=['POST'])
+@rentals.route('/<string:username>/rent_movie_by_name/<string:moviename>', methods=['POST'])
 def rent_movie_route(username, moviename):
     try:
         mydb = current_app.config['mysql']
