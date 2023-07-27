@@ -4,6 +4,8 @@ import { MovieService } from '../../services/movie.service';
 import { Input } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
+import { Rental } from '../rental-view/rental-view.component';
+
 
 interface Movie {
   title: string;
@@ -49,10 +51,10 @@ export class MovieComponent implements OnInit {
   ngOnInit() {
     // check currently rented movies
     this.backendService.getUserRentals(sessionStorage.getItem('username')!).subscribe(
-      (value: any) => {
-        alert("User rentals from backend: "+JSON.stringify(value))
-        const data_new = value as string[];
-        if (data_new.includes(this.movieTitle)) {
+      (data: any) => {
+        alert("User rentals from backend: "+JSON.stringify(data))
+        const data_new = data as Rental[];
+        if (data_new.map(rental => rental.movie_name).includes(this.movieTitle)) {
           this.canRent = false;
         }
       }
@@ -67,6 +69,7 @@ export class MovieComponent implements OnInit {
         alert("rent movie from backend: "+JSON.stringify(value));
       }
     )
+    this.canRent = false;
   }
   
 
