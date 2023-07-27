@@ -22,31 +22,31 @@ def upsert_review(username, movie_id):
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/delete_review/<string:username>/<string:moviename>', methods=['DELETE'])
-def delete_review(username, moviename):
+@reviews.route('/delete_review/<string:username>/<int:movie_id>', methods=['DELETE'])
+def delete_review(username, movie_id):
     try:
         mydb = current_app.config['mysql']
-        remove_review(username, moviename, mydb.connection)
+        remove_review(username, movie_id, mydb.connection)
         return jsonify({"message": "Review deleted successfully."}), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/get_single_review/<string:username>/<string:moviename>', methods=['GET'])
-def get_single_review(username, moviename):
+@reviews.route('/get_single_review/<string:username>/<int:movie_id>', methods=['GET'])
+def get_single_review(username, movie_id):
     try:
         mydb = current_app.config['mysql']
-        review = check_single_review(username, moviename, mydb.connection)
+        review = check_single_review(username, movie_id, mydb.connection)
         return jsonify(review), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/get_movie_reviews/<string:moviename>', methods=['GET'])
-def get_movie_reviews(moviename):
+@reviews.route('/get_movie_reviews/<int:movie_id>', methods=['GET'])
+def get_movie_reviews(movie_id):
     try:
         mydb = current_app.config['mysql']
-        reviews = get_movie_reviews(moviename, mydb.connection)
+        reviews = get_movie_reviews(movie_id, mydb.connection)
         return jsonify(reviews), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500

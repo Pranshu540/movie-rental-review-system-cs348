@@ -3,13 +3,12 @@ from datetime import date
 from MySQLdb import Error
 
 
-def create_review(username, moviename, rating, comment, mydb):
+def create_review(username, movie_id, rating, comment, mydb):
     userid = find_user_id(username, mydb)
-    movieid = find_movie_id(moviename, mydb)
     query = "INSERT INTO Review VALUES(%s, %s, %s, %s, %s)"
     create_review_cursor = mydb.cursor()
     try:
-        args = (userid, movieid, date.today(), rating, comment)
+        args = (userid, movie_id, date.today(), rating, comment)
         create_review_cursor.execute(query, args)
         mydb.commit()
         return "Review successfully created!"
@@ -19,13 +18,12 @@ def create_review(username, moviename, rating, comment, mydb):
         create_review_cursor.close()
 
 
-def remove_review(username, moviename, mydb):
+def remove_review(username, movie_id, mydb):
     userid = find_user_id(username, mydb)
-    movieid = find_movie_id(moviename, mydb)
     query = "DELETE FROM Review WHERE uid = %s AND mid = %s"
     remove_review_cursor = mydb.cursor()
     try:
-        remove_review_cursor.execute(query, (userid, movieid))
+        remove_review_cursor.execute(query, (userid, movie_id))
         mydb.connection.commit()
         return "Review successfully removed!"
     except Exception as error:
@@ -34,13 +32,12 @@ def remove_review(username, moviename, mydb):
         remove_review_cursor.close()
 
 
-def modify_review(username, moviename, rating, comment, mydb):
+def modify_review(username, movie_id, rating, comment, mydb):
     userid = find_user_id(username, mydb)
-    movieid = find_movie_id(moviename, mydb)
     query = "UPDATE Review SET review_date = %s, rating = %s, comment = %s WHERE uid = %s AND mid = %s"
     update_review_cursor = mydb.cursor()
     try:
-        args = (date.today(), rating, comment, userid, movieid)
+        args = (date.today(), rating, comment, userid, movie_id)
         update_review_cursor.execute(query, args)
         mydb.connection.commit()
     except Exception as error:
@@ -65,12 +62,11 @@ def check_single_review(username, movie_id, mydb):
         check_review_cursor.close()
 
 
-def get_movie_reviews(moviename, mydb):
-    movieid = find_movie_id(moviename, mydb)
+def get_movie_reviews(movie_id, mydb):
     query = "SELECT * FROM Review WHERE mid = %s"
     try:
         cursor = mydb.cursor()
-        cursor.execute(query, [movieid])
+        cursor.execute(query, [movie_id])
         result = cursor.fetchall()
         return result
     except Exception as e:
