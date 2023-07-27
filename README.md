@@ -11,7 +11,7 @@ IMDB dataset is retrieved directly from its link, we have a Python file to <br /
 filter, cleanse, and generate production data used by our database. <br />
 
 ## Running the application: <br />
-\*These are the instructions to run the command line Python application\*
+\*These are the instructions to run the command line Python application\*<br />
 \*In order to run the updated front-end & back-end follow the READMEs in their respective folders\*
 Edit .env file to set database information <br />
 Run `pip install -r requirements.txt` in the root directory <br />
