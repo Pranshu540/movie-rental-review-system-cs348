@@ -26,6 +26,7 @@ import { CarouselModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ReviewComponent } from './components/review/review.component';
 import { AdminComponent } from './components/admin/admin.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar'; 
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { AdminComponent } from './components/admin/admin.component';
     MatButtonModule,
     MatTableModule,
     CarouselModule,
-    IconModule
+    IconModule,
+    MatSnackBarModule
 
   ],
   providers: [],

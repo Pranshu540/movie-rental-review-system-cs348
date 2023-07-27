@@ -6,6 +6,7 @@ import { SimpleChanges } from '@angular/core';
 import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
 import { Rental, RentalViewComponent } from '../rental-view/rental-view.component';
 import { RentalDataService } from 'src/app/services/rental-data.service';
+import { timeout } from 'rxjs';
 
 
 interface Movie {
@@ -44,21 +45,27 @@ export class MovieComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    
     if (changes['movieTitle']) {
+      const username = localStorage.getItem('username')!;
       console.log('movieTitle changed: ', this.movieTitle);
       this.reloadMovie();
-      if (localStorage.getItem(this.movieTitle+'-available') === 'false') {
+      if (localStorage.getItem(this.movieTitle+'-available'+username) === 'false') {
         this.canRent = false;
       }
       this.selectedMovie.available = this.canRent;
       this.selectedMovie.title = this.movieTitle;
       this.selectedMovie.genre = 'Action';
       this.selectedMovie.price = 5;
-      if (localStorage.getItem(this.movieTitle+"-runtime")) {
+      while (true) {
+        if (!(localStorage.getItem(this.movieTitle+"-runtime"))) {
+          timeout(1000);
+        }
         const minutes = parseInt(localStorage.getItem(this.movieTitle+"-runtime")!);
         // format in hours and minutes
         const formatted_minutes = Math.floor(minutes/60) + 'h' +minutes%60 + ' minutes';
         this.selectedMovie.duration = formatted_minutes;
+        break;
 
       }
       if (localStorage.getItem(this.movieTitle+"-release_date")) {
@@ -123,7 +130,7 @@ export class MovieComponent implements OnInit {
     // }
     
     this.canRent = false;
-    localStorage.setItem(this.movieTitle+'-available', 'false');
+    localStorage.setItem(this.movieTitle+'-available'+username, 'false');
   }
   
 

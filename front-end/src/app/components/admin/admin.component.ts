@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin',
@@ -9,7 +10,8 @@ import { BackendCommunicationService } from 'src/app/services/backend-communicat
 export class AdminComponent {
   username: string = '';
 
-  constructor(private backendService: BackendCommunicationService) {}
+  constructor(private backendService: BackendCommunicationService,
+    private _snackBar: MatSnackBar) {}
 
   onDeleteUser() {
     if (this.username.trim() === '') {
@@ -36,5 +38,10 @@ export class AdminComponent {
     userList = userList.filter(user => user.username !== this.username);
     localStorage.setItem('userList', JSON.stringify(userList));
     localStorage.removeItem(this.username+'-rentals');
+
+    this.username = '';
+    this._snackBar.open('User deleted successfully', 'Close', {
+      duration: 2000,
+    });
   }
 }
