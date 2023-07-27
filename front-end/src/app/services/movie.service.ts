@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Movie } from '../components/search/search.component';
 
 
 @Injectable({
@@ -12,6 +13,19 @@ export class MovieService {
   apiKey = '09906a8ffa24affc69ec6a73c71c97ee';
   tmdbUrl = 'https://api.themoviedb.org/3';
   imageUrl = 'https://image.tmdb.org/t/p/w500';
+
+  movies: Movie[] = [
+    {title: "The Shawshank Redemption", available: true, genre: "Drama"},
+    {title: "The Godfather", available: false, genre: "Drama"},
+    {title: "The Godfather: Part II", available: false, genre: "Drama"},
+    {title: "The Dark Knight", available: false, genre: "Action"},
+    {title: "12 Angry Men", available: false, genre: "Drama"},
+    {title: "Schindler's List", available: false, genre: "Drama"},
+    {title: "The Lord of the Rings: The Return of the King", available: false, genre: "Adventure"},
+    {title: "Pulp Fiction", available: false, genre: "Drama"},
+    {title: "The Good, the Bad and the Ugly", available: false, genre: "Western"},
+    {title: "Fight Club", available: false, genre: "Drama"},
+  ];
 
   constructor(private http: HttpClient) {
     this.searchMovies("Barbie")
