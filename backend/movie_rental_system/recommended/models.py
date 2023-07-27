@@ -1,6 +1,5 @@
 from ..util.util import *
 import pandas as pd
-from MySQLdb import Error
 
 
 # Helper function to select a genre to recommend users
@@ -23,7 +22,7 @@ def choose_genre(userid, genre_list, mydb):
                     print("Invalid genre. Please check your spelling of the genre.")
                     continue
                 break
-    except Error as error:
+    except Exception as error:
         return "There was an error in finding the most rented genre from the database", error
     finally:
         choose_genre_cursor.close()
@@ -47,7 +46,7 @@ def create_recommended(username, mydb):
     try:
         args = (genre,)
         create_recommended_cursor.execute(query, args)
-    except Error as error:
+    except Exception as error:
         print("There was an error in creating the Recommended view:")
         print(error)
     finally:
@@ -59,7 +58,7 @@ def create_recommended(username, mydb):
         cursor.execute(query2)
         result_list = cursor.fetchall()
         df = pd.DataFrame(result_list, columns=["mid", "title", "rental_price", "duration"])
-    except Error as error:
+    except Exception as error:
         print("There was an error in selecting from the view:")
         print(error)
     finally:
@@ -131,7 +130,7 @@ def create_recommended(username, mydb):
     cursor = mydb.cursor()
     try:
         cursor.execute(query4)
-    except Error as error:
+    except Exception as error:
         print("There was an error in dropping the Recommended view:")
         print(error)
     finally:

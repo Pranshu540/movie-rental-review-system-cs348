@@ -1,4 +1,3 @@
-from MySQLdb import Error
 from ..util.util import find_user_id
 
 
@@ -11,6 +10,6 @@ def delete_user(username, mydb):
         mydb.commit()
         print("Account Deletion Successful")
         return True
-    except Error as err:
+    except Exception as err:
         print("Something went wrong: {}".format(err))
         return False

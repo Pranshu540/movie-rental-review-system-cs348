@@ -1,5 +1,4 @@
 from flask import request, jsonify, current_app
-from MySQLdb import Error
 from . import models
 from . import filter_movie
 from decimal import Decimal
@@ -24,5 +23,5 @@ def filter_movies_route():
         result = models.filter_movies(title_filter, count_filter, genre_filter, mydb.connection)
         result = [{k: decimal_default(v) if isinstance(v, Decimal) else v for k, v in row.items()} for row in result]
         return jsonify(result), 200
-    except Error as e:
+    except Exception as e:
         return jsonify({"error": str(e)}), 400

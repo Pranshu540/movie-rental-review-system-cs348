@@ -13,7 +13,7 @@ def create_review(username, moviename, rating, comment, mydb):
         create_review_cursor.execute(query, args)
         mydb.commit()
         return "Review successfully created!"
-    except Error as error:
+    except Exception as error:
         return Error('There was an error in adding the review to the database:', error)
     finally:
         create_review_cursor.close()
@@ -28,7 +28,7 @@ def remove_review(username, moviename, mydb):
         remove_review_cursor.execute(query, (userid, movieid))
         mydb.connection.commit()
         return "Review successfully removed!"
-    except Error as error:
+    except Exception as error:
         return Error('There was an error in removing the review from the database:', error)
     finally:
         remove_review_cursor.close()
@@ -44,7 +44,7 @@ def modify_review(username, moviename, rating, comment, mydb):
         update_review_cursor.execute(query, args)
         mydb.connection.commit()
         return "Review successfully modified."
-    except  Error as error:
+    except Exception as error:
         return Error('There was an error in updating the review in the database:', error)
     finally:
         update_review_cursor.close()
@@ -74,7 +74,7 @@ def get_movie_reviews(moviename, mydb):
         cursor.execute(query, [movieid])
         result = cursor.fetchall()
         return result
-    except Error as e:
+    except Exception as e:
         return Error(f"An error occurred: {e}")
     finally:
         cursor.close()

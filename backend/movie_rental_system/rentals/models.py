@@ -1,6 +1,5 @@
 from datetime import date, timedelta
 from ..util.util import find_user_id, find_movie_id
-
 from MySQLdb import Error
 
 

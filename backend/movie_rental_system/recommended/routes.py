@@ -1,5 +1,4 @@
 from flask import jsonify, current_app
-from MySQLdb import Error
 from . import models
 from . import recommended
 
@@ -10,6 +9,6 @@ def get_recommended_movies(username):
     try:
         result = models.create_recommended(username, mydb)
         return jsonify(result), 200
-    except Error as e:
+    except Exception as e:
         return jsonify({"error": str(e)}), 400
 
