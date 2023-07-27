@@ -9,6 +9,7 @@ def decimal_default(obj):
         return float(obj)
     raise TypeError
 
+
 @filter_movie.route('/', methods=['GET'])
 def filter_movies_route():
     # Retrieve the GET parameters
