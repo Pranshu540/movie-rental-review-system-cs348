@@ -27,8 +27,8 @@ export class ReviewComponent {
 
   @Input() movieTitle: string = '';
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['movieTitle']) {
+  ngOnChanges(changes: SimpleChanges, force=false) {
+    if (changes['movieTitle'] || force) {
       console.log('movieTitle changed from Review: ', this.movieTitle);
       // fetch comments for that move and update DATA
 
@@ -52,7 +52,7 @@ export class ReviewComponent {
   addReview(): void {
     this.backendService.addReview(this.newReview.username, this.movieTitle, this.newReview.rating, this.newReview.comment).subscribe(res => {
       // Refresh the reviews after adding
-      this.ngOnChanges({});
+      this.ngOnChanges({}, true);
     });
 
   }
@@ -60,7 +60,7 @@ export class ReviewComponent {
   editReview(): void {
     this.backendService.editReview(this.newReview.username, this.movieTitle, this.newReview.rating, this.newReview.comment).subscribe(res => {
       // Refresh the reviews after editing
-      this.ngOnChanges({});
+      this.ngOnChanges({}, true);
     });
   }
 
