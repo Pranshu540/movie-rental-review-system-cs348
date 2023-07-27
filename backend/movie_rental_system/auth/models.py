@@ -1,5 +1,4 @@
 from ..util.util import *
-from MySQLdb import Error
 
 # instance_user is a dictionary that stores the current user's username and uid
 instance_user = {'username': '', 'uid': ''}
@@ -70,6 +69,6 @@ def signup(username, password, mydb):
         mydb.commit()
         return "User created successfully"
 
-    except Error as error:
+    except Exception as error:
         print("Error creating user: {}".format(error))
         return False

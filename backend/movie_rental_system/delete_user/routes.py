@@ -3,7 +3,7 @@ from .models import delete_user
 from . import delete_user
 
 
-@delete_user.route('/delete_user/<string:username>', methods=['DELETE'])
+@delete_user.route('/<string:username>', methods=['DELETE'])
 def remove_user(username):
     try:
         mydb = current_app.config['mysql']

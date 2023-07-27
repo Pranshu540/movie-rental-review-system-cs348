@@ -2,9 +2,15 @@ from flask import request, jsonify, current_app
 from MySQLdb import Error
 from . import models
 from . import filter_movie
+from decimal import Decimal
 
 
-@filter_movie.route('/filter_movie', methods=['GET'])
+def decimal_default(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError
+
+@filter_movie.route('/', methods=['GET'])
 def filter_movies_route():
     # Retrieve the GET parameters
     title_filter = request.args.get('title', default=None, type=str)
@@ -16,6 +22,7 @@ def filter_movies_route():
     try:
         # Call the filter_movies function
         result = models.filter_movies(title_filter, count_filter, genre_filter, mydb.connection)
+        result = [{k: decimal_default(v) if isinstance(v, Decimal) else v for k, v in row.items()} for row in result]
         return jsonify(result), 200
     except Error as e:
         return jsonify({"error": str(e)}), 400

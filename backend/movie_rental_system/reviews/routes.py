@@ -16,7 +16,7 @@ def add_review(username, moviename):
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/remove_review/<string:username>/<string:moviename>', methods=['DELETE'])
+@reviews.route('/delete_review/<string:username>/<string:moviename>', methods=['DELETE'])
 def delete_review(username, moviename):
     try:
         mydb = current_app.config['mysql']
@@ -26,7 +26,7 @@ def delete_review(username, moviename):
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/modify_review/<string:username>/<string:moviename>', methods=['PUT'])
+@reviews.route('/edit_review/<string:username>/<string:moviename>', methods=['PUT'])
 def edit_review(username, moviename):
     try:
         data = request.get_json()
@@ -39,7 +39,7 @@ def edit_review(username, moviename):
         return jsonify({"message": str(e)}), 500
 
 
-@reviews.route('/check_review/<string:username>/<string:moviename>', methods=['GET'])
+@reviews.route('/get_single_review/<string:username>/<string:moviename>', methods=['GET'])
 def get_single_review(username, moviename):
     try:
         mydb = current_app.config['mysql']

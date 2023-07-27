@@ -25,7 +25,7 @@ def create_app():
 
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(filter_movie_blueprint, url_prefix='/filter_movie')
-    app.register_blueprint(reviews_blueprint, url_previx='/reviews')
+    app.register_blueprint(reviews_blueprint, url_prefix='/reviews')
     app.register_blueprint(rentals_blueprint, url_prefix='/rentals')
     app.register_blueprint(delete_user_blueprint, url_prefix='/delete_user')
     app.register_blueprint(recommended_blueprint, url_prefix='/recommended')

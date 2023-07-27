@@ -1,4 +1,4 @@
-from MySQLdb import Error
+from decimal import Decimal
 
 
 def filter_movies(title_filter, count_filter, genre_filter, mydb):
@@ -29,8 +29,11 @@ def filter_movies(title_filter, count_filter, genre_filter, mydb):
         cursor = mydb.cursor()
         cursor.execute(cmd, filter_params)
 
-        my_result = cursor.fetchall()
-    except Error as err:
+        rows = cursor.fetchall()
+        col_names = [desc[0] for desc in cursor.description]
+
+        my_result = [dict(zip(col_names, row)) for row in rows]
+    except Exception as err:
         return "Something went wrong: {}".format(err)
     finally:
         cursor.close()
