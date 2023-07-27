@@ -50,10 +50,9 @@ export class MovieComponent implements OnInit {
       const username = localStorage.getItem('username')!;
       console.log('movieTitle changed: ', this.movieTitle);
       await this.reloadMovie();
-      if (localStorage.getItem(this.movieTitle+'-available'+username) === 'false') {
+      if (this.rentalDataService.getRentals().map(rental => rental.movie_name).includes(this.movieTitle)) {
         this.canRent = false;
       }
-      this.selectedMovie.available = this.canRent;
       this.selectedMovie.title = this.movieTitle;
       this.selectedMovie.genre = 'Action';
       this.selectedMovie.price = 5;
@@ -106,27 +105,11 @@ export class MovieComponent implements OnInit {
     })
     
     this.rentalDataService.setRentals(rentals);
-    // let rentals: any = localStorage.getItem(username+'-Rentals');
-    // if (rentals) {
-    //   rentals = JSON.parse(rentals) as Rental[];
-    //   rentals.push({
-    //     movie_name: this.movieTitle,
-    //     rental_start_date: new Date(),
-    //     rental_end_date: new Date('August 8, 2023 03:24:00')
-    //   })
-    //   localStorage.setItem(username+'-Rentals', JSON.stringify(rentals));
-    // } else {
-    //   rentals = JSON.stringify([{
-    //     movie_name: this.movieTitle,
-    //     rental_start_date: new Date(),
-    //     rental_end_date: new Date('August 8, 2023 03:24:00')
-    //   }])
-    //   localStorage.setItem(username+'-Rentals', rentals);
-    //   
-    // }
+    let balance = localStorage.getItem('balance')!;
+    balance = (parseInt(balance) - 9.99).toString();
+    localStorage.setItem('balance', balance);
     
     this.canRent = false;
-    localStorage.setItem(this.movieTitle+'-available'+username, 'false');
   }
   
 

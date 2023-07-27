@@ -26,7 +26,8 @@ import { CarouselModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ReviewComponent } from './components/review/review.component';
 import { AdminComponent } from './components/admin/admin.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ProfileComponent } from './components/profile/profile.component'; 
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     RecommendationsComponent,
     ReviewComponent,
     AdminComponent,
-    RentalViewComponent
+    RentalViewComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

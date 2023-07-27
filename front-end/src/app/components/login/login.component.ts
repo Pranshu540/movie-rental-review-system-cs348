@@ -33,7 +33,7 @@ export class LoginComponent {
     sessionStorage.setItem('username', formValue.username);
     sessionStorage.setItem('password', formValue.password);
 
-    
+    localStorage.setItem('balance', '100');
     
     this.router.navigate(['home']);
   }
@@ -60,6 +60,7 @@ export class LoginComponent {
     if (formValue.username === "nj") {
       sessionStorage.setItem('isAdmin', 'true')
     }
+    
   }
 }
 

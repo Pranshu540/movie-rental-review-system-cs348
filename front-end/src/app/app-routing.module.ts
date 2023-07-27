@@ -10,6 +10,7 @@ import { RentalViewComponent } from './components/rental-view/rental-view.compon
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 import { ReviewComponent } from './components/review/review.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   { path: 'login', component : LoginComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'rentals', component: RentalViewComponent},
   {path: 'recommendations', component: RecommendationsComponent},
   { path: 'reviews', component: ReviewComponent},
-  {path: 'admin', component: AdminComponent}
+  {path: 'admin', component: AdminComponent},
+  {path: 'profile', component: ProfileComponent},
   // { path: 'movies/:name', component: MovieComponent }
 ];
 
