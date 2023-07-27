@@ -6,7 +6,7 @@ def delete_user(userid, mydb):
     db = mydb
 
     try:
-        cursor = db.cursor()
+        cursor = db.connection.cursor()
         cursor.execute(query)
         mydb.commit()
         print("Account Deletion Successful")

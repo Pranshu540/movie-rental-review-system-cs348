@@ -6,7 +6,14 @@ from flask_mysqldb import MySQL
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    app.config['mysql'] = MySQL(app)
+    # Initialize MySQL
+    mysql = MySQL(app)
+
+    # Add MySQL object to app's configuration
+    app.config['mysql'] = mysql
+
+    # Now init app
+    mysql.init_app(app)
 
     # import and register blueprints
     from .auth import auth as auth_blueprint

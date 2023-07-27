@@ -2,8 +2,7 @@ from datetime import date, timedelta
 
 
 def rent_movie(user_id, movie_id, mydb):
-    db = mydb
-    cursor = db.cursor()
+    cursor = mydb.connect.cursor()
 
     # Check if the user and movie exists and the movie is available for rent
     cursor.execute(f"SELECT rental_quantity FROM Movie WHERE mid = {movie_id}")
@@ -43,12 +42,12 @@ def rent_movie(user_id, movie_id, mydb):
             f"INSERT INTO Rental (uid, mid, rent_date, due_date, is_active) VALUES ({user_id}, {movie_id}, '{rent_date}', '{due_date}', 1)")
 
         # Commit the transaction
-        db.commit()
+        mydb.commit()
         print("Movie rented successfully")
 
     except Exception as e:
         # If an error occurred, rollback the transaction
-        db.rollback()
+        mydb.rollback()
         print(f"An error occurred: {e}")
 
     finally:
@@ -56,8 +55,7 @@ def rent_movie(user_id, movie_id, mydb):
 
 
 def check_rentals(mydb):
-    db = mydb
-    cursor = db.cursor()
+    cursor = mydb.cursor()
     cursor.execute("SELECT * FROM Rental")
     result = cursor.fetchall()
     for x in result:

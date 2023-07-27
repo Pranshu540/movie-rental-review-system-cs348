@@ -1,8 +1,9 @@
 from flask import jsonify, current_app
 from .models import delete_user
+from . import delete_user
 
 
-@app.route('/delete_user/<userid>', methods=['DELETE'])
+@delete_user.route('/delete_user/<userid>', methods=['DELETE'])
 def remove_user(userid):
     try:
         mydb = current_app.config['mysql']
