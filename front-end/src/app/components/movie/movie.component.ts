@@ -50,10 +50,9 @@ export class MovieComponent implements OnInit {
       const username = localStorage.getItem('username')!;
       console.log('movieTitle changed: ', this.movieTitle);
       await this.reloadMovie();
-      if (localStorage.getItem(this.movieTitle+'-available'+username) === 'false') {
+      if (this.rentalDataService.getRentals().map(rental => rental.movie_name).includes(this.movieTitle)) {
         this.canRent = false;
       }
-      this.selectedMovie.available = this.canRent;
       this.selectedMovie.title = this.movieTitle;
       this.selectedMovie.genre = 'Action';
       this.selectedMovie.price = 5;
@@ -111,7 +110,6 @@ export class MovieComponent implements OnInit {
     localStorage.setItem('balance', balance);
     
     this.canRent = false;
-    localStorage.setItem(this.movieTitle+'-available'+username, 'false');
   }
   
 

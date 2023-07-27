@@ -21,6 +21,7 @@ export class RentalDataService {
   clearUserRentals() {
     const username = sessionStorage.getItem('username');
     localStorage.removeItem(username+'-rentals');
+    this.rentals = [];
   }
 
   setRentals(rentals: Rental[]) {

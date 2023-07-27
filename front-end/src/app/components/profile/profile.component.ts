@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { RentalDataService } from 'src/app/services/rental-data.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,8 @@ export class ProfileComponent {
 
   constructor(
     private _snackBar: MatSnackBar,
-    private router: Router) {}
+    private router: Router,
+    private rentalService: RentalDataService) {}
 
   onDeleteUser() {
 
@@ -32,7 +34,9 @@ export class ProfileComponent {
     this._snackBar.open('User deleted successfully', 'Close', {
       duration: 1000,
     });
-    localStorage.removeItem(this.username+'-rentals');
+
+    this.rentalService.clearUserRentals();
+    
     sessionStorage.clear();
     setTimeout(() => {
       this.router.navigate(['login']);
