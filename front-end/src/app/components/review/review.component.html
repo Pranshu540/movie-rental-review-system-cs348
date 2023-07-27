@@ -11,7 +11,18 @@
         <td>{{ review.username }}</td>
         <td>{{ review.comment }}</td>
         <td>{{ review.rating }}</td>
+        <td *ngIf="review.username == this.username">
+          <button (click)="deleteReview()">Delete</button>
+        </td>   
       </tr>
     </tbody>
   </table>
+
+  <form #reviewForm="ngForm">
+    <label for="comment">Comment:</label>
+    <input type="text" id="comment" [(ngModel)]="newReview.comment" name="comment">
+    <label for="rating">Rating:</label>
+    <input type="number" id="rating" [(ngModel)]="newReview.rating" name="rating" min="1" max="5">
+    <button (click)="addReview()">Add Review</button>
+  </form>
   

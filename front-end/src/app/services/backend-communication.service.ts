@@ -35,17 +35,23 @@ export class BackendCommunicationService {
     return this.http.get(`${this.baseUrl}/rentals`);
   }
 
-  createReview(userId: number, movieId: number, rating: number, comment: string) {
-    return this.http.post(`${this.baseUrl}/create_review/${userId}/${movieId}`, {rating, comment});
+
+  addReview(username: string, moviename: string, rating: number, comment: string): Observable<any> {
+    const url = `${this.baseUrl}/create_review/${username}/${moviename}`;
+    return this.http.post(url, { rating, comment });
   }
 
-  deleteReview(userId: number, movieId: number) {
-    return this.http.delete(`${this.baseUrl}/remove_review/${userId}/${movieId}`);
+  deleteReview(username: string, moviename: string): Observable<any> {
+    const url = `${this.baseUrl}/delete_review/${username}/${moviename}`;
+    return this.http.delete(url);
   }
 
-  editReview(userId: number, movieId: number, rating: number, comment: string) {
-    return this.http.put(`${this.baseUrl}/modify_review/${userId}/${movieId}`, {rating, comment});
+  editReview(username: string, moviename: string, rating: number, comment: string): Observable<any> {
+    const url = `${this.baseUrl}/edit_review/${username}/${moviename}`;
+    return this.http.put(url, { rating, comment });
   }
+
+
 
   getSingleReview(userId: number, movieId: number) {
     return this.http.get(`${this.baseUrl}/check_review/${userId}/${movieId}`);

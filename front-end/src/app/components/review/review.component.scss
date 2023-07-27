@@ -11,8 +11,13 @@ table {
 
   :host {
     display: flex;
+    flex-direction: column;
     width: 100%;
     justify-content: center;
+    align-items: center;
     padding: 1rem;
   }
   
+  form {
+    margin-top: 1rem;
+  }
