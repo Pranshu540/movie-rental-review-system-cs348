@@ -70,8 +70,8 @@ export class BackendCommunicationService {
     return this.http.get(`${this.baseUrl}/check_all_reviews`);
   }
 
-  deleteUser(userId: number) {
-    return this.http.delete(`${this.baseUrl}/delete_user/${userId}`);
+  deleteUser(username: string) {
+    return this.http.delete(`${this.baseUrl}/delete_user/${username}`);
   }
 
   getRecommendedMovies(username: string) {

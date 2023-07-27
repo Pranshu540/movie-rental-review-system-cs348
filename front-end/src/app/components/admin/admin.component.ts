@@ -13,21 +13,28 @@ export class AdminComponent {
 
   onDeleteUser() {
     if (this.username.trim() === '') {
-      
+      alert('Username is required.');
       return;
     }
 
-    this.backendService.deleteUser(this.username).subscribe(
-      () => {
-        
-      },
-      (error: any) => {
-        // Handle any errors here
-        console.error('Error deleting user:', error);
-        
-      }
-    );
+    // this.backendService.deleteUser(this.username).subscribe(
+    //   () => {
+    //     alert('User deleted successfully.');
+    //   },
+    //   (error: any) => {
+    //     // Handle any errors here
+    //     console.error('Error deleting user:', error);
+    //     alert('There was an error deleting the user. Please try again.');
+    //   }
+    // );
 
-    this.username = '';
+    // this.username = '';
+    let userList: any[] = [];
+    if (localStorage.getItem('userList')) {
+      userList = JSON.parse(localStorage.getItem('userList')!);
+    }
+    userList = userList.filter(user => user.username !== this.username);
+    localStorage.setItem('userList', JSON.stringify(userList));
+    localStorage.removeItem(this.username+'-rentals');
   }
 }

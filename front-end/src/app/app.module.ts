@@ -25,6 +25,7 @@ import { RecommendationsComponent } from './components/recommendations/recommend
 import { CarouselModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ReviewComponent } from './components/review/review.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ReviewComponent } from './components/review/review.component';
     RentalViewComponent,
     RecommendationsComponent,
     ReviewComponent,
+    AdminComponent,
     RentalViewComponent
   ],
   imports: [

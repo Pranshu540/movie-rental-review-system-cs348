@@ -17,6 +17,7 @@ export interface Review {
   styleUrls: ['./review.component.scss']
 })
 export class ReviewComponent implements OnInit{
+  isAdmin = sessionStorage.getItem('isAdmin') === 'true';
   DATA: Review[] = []
   constructor(private backendService: BackendCommunicationService) {}
   ngOnInit() {
@@ -72,15 +73,17 @@ export class ReviewComponent implements OnInit{
           'I was disappointed by this movie. The story felt cliché, and the characters were poorly developed. It didn\'t offer anything new or memorable.',
           'I was disappointed by this movie. The story felt cliché, and the characters were poorly developed. It didn\'t offer anything new or memorable.'
         ].reverse()
+        let new_data = []
         for (let i = 0; i < num; i++) {
           const rating = Math.floor(Math.random() * 5) + 1;
-          this.DATA.push({
+          new_data.push({
             username: 'user' + i,
             comment: sample_comments[rating - 1],
             rating: rating
         });
       }
-        localStorage.setItem(this.movieTitle!+'-reviews', JSON.stringify(this.DATA));
+        localStorage.setItem(this.movieTitle!+'-reviews', JSON.stringify(new_data));
+        this.DATA = new_data;
       }
 
     }
@@ -109,12 +112,12 @@ export class ReviewComponent implements OnInit{
     });
   }
 
-  deleteReview(): void {
+  deleteReview(username: string): void {
     // this.backendService.deleteReview(localStorage.getItem('username')!, this.movieTitle).subscribe(res => {
     //   // Refresh the reviews after deleting
     //   this.ngOnChanges({});
     // });
-    this.DATA = this.DATA.filter(review => review.username !== this.username);
+    this.DATA = this.DATA.filter(review => review.username !== username);
     localStorage.setItem(this.movieTitle!+'-reviews', JSON.stringify(this.DATA));
   }
 

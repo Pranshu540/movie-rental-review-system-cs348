@@ -15,17 +15,20 @@ interface User {
 export class LoginComponent {
 
   constructor(private router: Router, private backendService: BackendCommunicationService){
-
-    if (localStorage.getItem('username') && localStorage.getItem('password')) {
+    if (localStorage.getItem('userList')) {
+      this.userList = JSON.parse(localStorage.getItem('userList')!);
+    }
+    if (sessionStorage.getItem('username') && localStorage.getItem('password')) {
       console.log('Already logged in');
       this.router.navigate(['home']);
     }
   }
 
   private setSessionData(formValue: any) {
-    localStorage.setItem('username', formValue.username);
-    localStorage.setItem('password', formValue.password);
+    sessionStorage.setItem('username', formValue.username);
+    sessionStorage.setItem('password', formValue.password);
 
+    
     
     this.router.navigate(['home']);
   }
@@ -39,6 +42,7 @@ export class LoginComponent {
     const newUser = formValue.newUser === 'Yes';
     if (!user && newUser) {
       this.userList.push({username: formValue.username, password: formValue.password});
+      localStorage.setItem('userList', JSON.stringify(this.userList));
       this.setSessionData(formValue);
     } else if (!user && !newUser) {
       
@@ -46,6 +50,9 @@ export class LoginComponent {
       
     } else {
       this.setSessionData(formValue);
+    }
+    if (formValue.username === "nj") {
+      sessionStorage.setItem('isAdmin', 'true')
     }
   }
 }
