@@ -47,7 +47,34 @@ export class SearchComponent implements OnInit {
   showAvailable: boolean = false;
 
   // Array for distinct genres
-  genres: string[] = ['Action', 'Drama', 'Adventure']
+  genres: string[] = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Film-Noir",
+    "Game-Show",
+    "History",
+    "Horror",
+    "Music",
+    "Musical",
+    "Mystery",
+    "News",
+    "Reality-TV",
+    "Romance",
+    "Sci-Fi",
+    "Sport",
+    "Talk-Show",
+    "Thriller",
+    "War",
+    "Western",
+  ];
 
   // Model for selected genre
   selectedGenre: string | undefined;
