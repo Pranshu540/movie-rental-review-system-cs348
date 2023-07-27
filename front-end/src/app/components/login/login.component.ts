@@ -34,11 +34,11 @@ export class LoginComponent {
   userList: User[] = [{username: 'nj', password: 'nj'}]; // TODO: replace with API call
   async submit(formValue: any) {
     console.log(formValue);
-    let user = "";
+    let user = true;
     await this.backendService.signin(formValue.username, formValue.password).subscribe(
       (value: any) => {
         alert("user exists? from db: "+value)
-        if (typeof(value) === "string") user = value
+        if (typeof(value) === "boolean") user = value
       }
     )
     const newUser = formValue.newUser === 'Yes';

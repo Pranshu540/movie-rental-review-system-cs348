@@ -41,4 +41,31 @@ export class ReviewComponent {
     }
   }
 
+  newReview: Review = {
+    username: sessionStorage.getItem('username')!,
+    comment: '',
+    rating: 3
+  }
+
+  addReview(): void {
+    this.backendService.addReview(this.newReview.username, this.movieTitle, this.newReview.rating, this.newReview.comment).subscribe(res => {
+      // Refresh the reviews after adding
+      this.ngOnChanges({});
+    });
+  }
+
+  editReview(): void {
+    this.backendService.editReview(this.newReview.username, this.movieTitle, this.newReview.rating, this.newReview.comment).subscribe(res => {
+      // Refresh the reviews after editing
+      this.ngOnChanges({});
+    });
+  }
+
+  deleteReview(): void {
+    this.backendService.deleteReview(this.newReview.username, this.movieTitle).subscribe(res => {
+      // Refresh the reviews after deleting
+      this.ngOnChanges({});
+    });
+  }
+
 }
