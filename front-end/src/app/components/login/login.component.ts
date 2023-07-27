@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
 
 interface User {
   username: string;
@@ -13,7 +14,7 @@ interface User {
 })
 export class LoginComponent {
 
-  constructor(private router: Router){
+  constructor(private router: Router, private backendService: BackendCommunicationService){
 
     if (sessionStorage.getItem('username') && sessionStorage.getItem('password')) {
       console.log('Already logged in');
@@ -24,19 +25,25 @@ export class LoginComponent {
   private setSessionData(formValue: any) {
     sessionStorage.setItem('username', formValue.username);
     sessionStorage.setItem('password', formValue.password);
+
     alert('Login successful');
     this.router.navigate(['home']);
   }
   
   
   userList: User[] = [{username: 'nj', password: 'nj'}]; // TODO: replace with API call
-  submit(formValue: any) {
+  async submit(formValue: any) {
     console.log(formValue);
-
-    const user = this.userList.find((user) => user.username === formValue.username && user.password === formValue.password);
+    let user = "";
+    await this.backendService.signin(formValue.username, formValue.password).subscribe(
+      (value: any) => {
+        alert("user exists? from db: "+value)
+        if (typeof(value) === "string") user = value
+      }
+    )
     const newUser = formValue.newUser === 'Yes';
     if (!user && newUser) {
-      this.userList.push({username: formValue.username, password: formValue.password});
+      this.backendService.signup(formValue.username, formValue.password);
       this.setSessionData(formValue);
     } else if (!user && !newUser) {
       alert('User not found');
