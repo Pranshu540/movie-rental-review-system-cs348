@@ -5,8 +5,11 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
+import { switchMap } from 'rxjs/operators';
+import { from } from 'rxjs';
 
-interface Movie {
+export interface Movie {
   title: string;
   available: boolean;
   genre: string;
@@ -20,7 +23,8 @@ interface Movie {
 export class SearchComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private backendService: BackendCommunicationService
   ) {}
 
   movieTitle: string = '';
@@ -36,7 +40,6 @@ export class SearchComponent implements OnInit {
     {title: "Pulp Fiction", available: false, genre: "Drama"},
     {title: "The Good, the Bad and the Ugly", available: false, genre: "Western"},
     {title: "Fight Club", available: false, genre: "Drama"},
-    {title: "Barbie", available: false, genre: "Drama"}
   ];
 
   movieControl = new FormControl();
@@ -74,35 +77,39 @@ export class SearchComponent implements OnInit {
   ];
 
   // Model for selected genre
-  selectedGenre: string = '';
+  selectedGenre: string | undefined;
 
   ngOnInit() {
-    this.filteredMovies = this.movieControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterMovies(value))
-      );
+    this.filteredMovies = this.movieControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterMovies(value))
+    );
   }
+
 
   private _filterMovies(value: string): Movie[] {
     let filterValue = '';
-  
-    if(value) {
-      filterValue = value.toLowerCase();
+
+    if (value) {
+        filterValue = value.toLowerCase();
     }
 
     // consider 'showAvailable' and 'selectedGenre' when filtering the movies
-    let filteredMovies = this.movies.filter(movie => 
-      movie.title.toLowerCase().includes(filterValue) &&
-      (!this.showAvailable || movie.available) &&
-      (this.selectedGenre === '' || movie.genre === this.selectedGenre)
+    // let filteredMovies = from(this.backendService.filterMovies(filterValue, undefined, this.selectedGenre))
+    let filteredMovies = this.movies.filter(
+      (movie) =>
+        movie.title.toLowerCase().includes(filterValue) &&
+        (!this.showAvailable || movie.available) &&
+        (!this.selectedGenre || movie.genre === this.selectedGenre)
     );
+
 
     // debug
     console.log('Show available:', this.showAvailable);
     console.log('Filtered movies:', filteredMovies);
     return filteredMovies;
-  }
+}
+
 
   refreshMovies() {
     const currentValue = this.movieControl.value;
