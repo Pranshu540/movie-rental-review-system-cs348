@@ -18,6 +18,11 @@ export class RentalDataService {
     return this.rentals;
   }
 
+  clearUserRentals() {
+    const username = sessionStorage.getItem('username');
+    localStorage.removeItem(username+'-rentals');
+  }
+
   setRentals(rentals: Rental[]) {
     const username = sessionStorage.getItem('username');
     this.rentals = localStorage.getItem(username+'-rentals') ? JSON.parse(localStorage.getItem('rentals')!) : [];

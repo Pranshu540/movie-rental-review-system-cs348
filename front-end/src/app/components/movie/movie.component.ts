@@ -109,24 +109,6 @@ export class MovieComponent implements OnInit {
     let balance = localStorage.getItem('balance')!;
     balance = (parseInt(balance) - 9.99).toString();
     localStorage.setItem('balance', balance);
-    // let rentals: any = localStorage.getItem(username+'-Rentals');
-    // if (rentals) {
-    //   rentals = JSON.parse(rentals) as Rental[];
-    //   rentals.push({
-    //     movie_name: this.movieTitle,
-    //     rental_start_date: new Date(),
-    //     rental_end_date: new Date('August 8, 2023 03:24:00')
-    //   })
-    //   localStorage.setItem(username+'-Rentals', JSON.stringify(rentals));
-    // } else {
-    //   rentals = JSON.stringify([{
-    //     movie_name: this.movieTitle,
-    //     rental_start_date: new Date(),
-    //     rental_end_date: new Date('August 8, 2023 03:24:00')
-    //   }])
-    //   localStorage.setItem(username+'-Rentals', rentals);
-    //   
-    // }
     
     this.canRent = false;
     localStorage.setItem(this.movieTitle+'-available'+username, 'false');
