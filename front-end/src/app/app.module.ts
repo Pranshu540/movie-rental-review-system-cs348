@@ -37,7 +37,8 @@ import { ReviewComponent } from './components/review/review.component';
     HeaderComponent,
     RentalViewComponent,
     RecommendationsComponent,
-    ReviewComponent
+    ReviewComponent,
+    RentalViewComponent
   ],
   imports: [
     BrowserModule,

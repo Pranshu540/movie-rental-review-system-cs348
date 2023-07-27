@@ -25,7 +25,7 @@ export class RecommendationsComponent implements OnInit {
   }
 
   removeSuggestion() {
-    alert('Removing index: ' + this.index);
+    
     this.recommendationMovieNames[this.index] = "Barbie"
     this.loadMovieRecommendations();
   }

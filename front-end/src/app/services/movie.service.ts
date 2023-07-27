@@ -12,9 +12,29 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
+  searchById(id: number): Observable<any> {
+    const searchUrl = `${this.tmdbUrl}/movie/${id}?api_key=${this.apiKey}`;
+    return this.http.get(searchUrl);
+  }
+
   searchMovies(query: string): Observable<any> {
     const searchUrl = `${this.tmdbUrl}/search/movie?api_key=${this.apiKey}&query=${query}`;
-    return this.http.get(searchUrl);
+    
+    const returnData = this.http.get(searchUrl);
+    returnData.subscribe((data: any) => {
+      if (data.results) {
+        const result: any = data.results[0]
+        // console.log(JSON.stringify(result));
+        sessionStorage.setItem(query+"-release_date", result.release_date);
+        this.searchById(result.id).subscribe((data: any) => {
+          console.log(JSON.stringify(data));
+          sessionStorage.setItem(query+"-runtime", data.runtime);
+        });
+        
+
+      }
+    });
+    return returnData;
   }
 
   getPosterUrl(posterPath: string): string {

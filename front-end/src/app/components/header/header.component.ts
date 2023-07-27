@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   constructor(private router: Router) {}
   navigate(location: string) {
-    alert("Navigating to "+location)
+    
     this.router.navigate([location]);
   }
 

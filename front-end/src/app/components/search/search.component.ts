@@ -119,5 +119,6 @@ export class SearchComponent implements OnInit {
 
   optionSelected(event: MatAutocompleteSelectedEvent) {
     this.movieTitle = event.option.value;
+    sessionStorage.setItem(this.movieTitle, this.movies.find(movie => movie.title === this.movieTitle)!.genre);
   }
 }
