@@ -13,11 +13,21 @@ def rent_movie_route(username, movie_id):
         return jsonify({"error": str(e)}), 400
 
 
-@rentals.route('/<string:username>', methods=['GET'])
+@rentals.route('/get_user_rentals/<string:username>', methods=['GET'])
 def get_user_rentals(username):
     try:
         mydb = current_app.config['mysql']
         response = get_user_rentals(username, mydb.connection)
+        return jsonify(response), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@rentals.route('/get_user_wallet/<string:username>', methods=['GET'])
+def get_user_wallet(username):
+    try:
+        mydb = current_app.config['mysql']
+        response = get_user_wallet(username, mydb.connection)
         return jsonify(response), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400

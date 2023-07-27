@@ -13,11 +13,11 @@ export class BackendCommunicationService {
   constructor(private http: HttpClient) { }
 
   signin(username: string, password: string) {
-    return this.http.post(`${this.baseUrl}/signin`, {username, password});
+    return this.http.post(`${this.baseUrl}/auth/signin`, {username, password});
   }
 
   signup(username: string, password: string) {
-    return this.http.post(`${this.baseUrl}/signup`, {username, password});
+    return this.http.post(`${this.baseUrl}/auth/signup`, {username, password});
   }
 
   rentMovie(userId: number, movieId: number) {

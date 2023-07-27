@@ -64,3 +64,16 @@ def get_user_rentals(username, mydb):
         return Error(f"An error occurred: {e}")
     finally:
         cursor.close()
+
+
+def get_user_wallet(username, mydb):
+    cursor = mydb.cursor()
+    try:
+        user_id = find_user_id(username, mydb)
+        cursor.execute(f"SELECT wallet FROM User WHERE uid={user_id}")
+        result = cursor.fetchall()
+        return result
+    except Exception as e:
+        return Error(f"An error occurred: {e}")
+    finally:
+        cursor.close()
