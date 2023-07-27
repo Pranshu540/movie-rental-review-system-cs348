@@ -24,6 +24,13 @@ export class BackendCommunicationService {
     return this.http.post(`${this.baseUrl}/${userId}/rent_movie/${movieId}`, {});
   }
 
+  /*
+    returns an array of movie titles the user has rented
+    */
+  rentMovieByName(username: string, moveieName: string) {
+    return this.http.post(`${this.baseUrl}/${username}/rent_movie_by_name/${moveieName}`, {});
+  }
+
   checkRentals() {
     return this.http.get(`${this.baseUrl}/rentals`);
   }
