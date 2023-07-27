@@ -51,8 +51,10 @@ export class LoginComponent {
       localStorage.setItem('userList', JSON.stringify(this.userList));
       this.setSessionData(formValue);
     } else if (!user && !newUser) {
+      alert('User not found');
       
     } else if (user && newUser) {
+      alert('User already exists');
       
     } else {
       this.setSessionData(formValue);
