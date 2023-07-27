@@ -13,7 +13,7 @@ interface Movie {
   title: string;
   available: boolean;
   genre: string;
-  price: number;
+  price: string;
   duration: string;
   releaseYear: string;
 }
@@ -54,8 +54,8 @@ export class MovieComponent implements OnInit {
         this.canRent = false;
       }
       this.selectedMovie.title = this.movieTitle;
-      this.selectedMovie.genre = 'Action';
-      this.selectedMovie.price = 5;
+      this.selectedMovie.genre = this.movieService.movies.filter(movie => movie.title === this.movieTitle)[0].genre;
+      this.selectedMovie.price = "9.99";
       if (localStorage.getItem(this.movieTitle+"-runtime")) {
         const minutes = parseInt(localStorage.getItem(this.movieTitle+"-runtime")!);
         // format in hours and minutes

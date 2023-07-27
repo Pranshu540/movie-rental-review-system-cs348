@@ -8,6 +8,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { BackendCommunicationService } from 'src/app/services/backend-communication.service';
 import { switchMap } from 'rxjs/operators';
 import { from } from 'rxjs';
+import { MovieService } from 'src/app/services/movie.service';
 
 export interface Movie {
   title: string;
@@ -24,23 +25,13 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private backendService: BackendCommunicationService
+    private backendService: BackendCommunicationService,
+    private movieService: MovieService
   ) {}
 
   movieTitle: string = '';
 
-  movies: Movie[] = [
-    {title: "The Shawshank Redemption", available: true, genre: "Drama"},
-    {title: "The Godfather", available: false, genre: "Drama"},
-    {title: "The Godfather: Part II", available: false, genre: "Drama"},
-    {title: "The Dark Knight", available: false, genre: "Action"},
-    {title: "12 Angry Men", available: false, genre: "Drama"},
-    {title: "Schindler's List", available: false, genre: "Drama"},
-    {title: "The Lord of the Rings: The Return of the King", available: false, genre: "Adventure"},
-    {title: "Pulp Fiction", available: false, genre: "Drama"},
-    {title: "The Good, the Bad and the Ugly", available: false, genre: "Western"},
-    {title: "Fight Club", available: false, genre: "Drama"},
-  ];
+
 
   movieControl = new FormControl();
   filteredMovies!: Observable<Movie[]>;
@@ -96,7 +87,7 @@ export class SearchComponent implements OnInit {
 
     // consider 'showAvailable' and 'selectedGenre' when filtering the movies
     // let filteredMovies = from(this.backendService.filterMovies(filterValue, undefined, this.selectedGenre))
-    let filteredMovies = this.movies.filter(
+    let filteredMovies = this.movieService.movies.filter(
       (movie) =>
         movie.title.toLowerCase().includes(filterValue) &&
         (!this.showAvailable || movie.available) &&
@@ -119,6 +110,6 @@ export class SearchComponent implements OnInit {
 
   optionSelected(event: MatAutocompleteSelectedEvent) {
     this.movieTitle = event.option.value;
-    localStorage.setItem(this.movieTitle, this.movies.find(movie => movie.title === this.movieTitle)!.genre);
+    localStorage.setItem(this.movieTitle, this.movieService.movies.find(movie => movie.title === this.movieTitle)!.genre);
   }
 }
