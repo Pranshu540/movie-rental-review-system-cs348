@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +24,30 @@ export class MovieService {
 
   searchMovies(query: string): Observable<any> {
     const searchUrl = `${this.tmdbUrl}/search/movie?api_key=${this.apiKey}&query=${query}`;
-    
-    const returnData = this.http.get(searchUrl);
-    returnData.subscribe((data: any) => {
-      if (data.results) {
-        const result: any = data.results[0]
-        // console.log(JSON.stringify(result));
-        localStorage.setItem(query+"-release_date", result.release_date);
-        this.searchById(result.id).subscribe((data: any) => {
+  
+    return this.http.get(searchUrl).pipe(
+      map((data: any) => {
+        if (data.results) {
+          const result: any = data.results[0];
+          localStorage.setItem(query+"-release_date", result.release_date);
+          return result.id;
+        }
+        return null;
+      }),
+      switchMap(id => {
+        if (id) {
+          return this.searchById(id);
+        }
+        return of(null);
+      }),
+      map((data: any) => {
+        if (data) {
           console.log(JSON.stringify(data));
           localStorage.setItem(query+"-runtime", data.runtime);
-        });
-        
-
-      }
-    });
-    return returnData;
+        }
+        return data;
+      })
+    );
   }
 
   getPosterUrl(posterPath: string): string {
@@ -47,11 +58,11 @@ export class MovieService {
     if (movieTitle != '') {
       try {
         const data = await this.searchMovies(movieTitle).toPromise();
-
+  
         console.log('Movie data:', data);
-
-        if (data.results.length > 0) {
-          return this.getPosterUrl(data.results[0].poster_path);
+  
+        if (data) {
+          return this.getPosterUrl(data.poster_path);
         } else {
           return '';
         }
@@ -59,8 +70,9 @@ export class MovieService {
         console.error('Error:', error);
       }
     }
-
+  
     return '';
   }
+  
 
 }
