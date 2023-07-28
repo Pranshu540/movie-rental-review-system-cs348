@@ -1,7 +1,6 @@
-# How to deploy the flask app:
+# How to deploy the Flask app:
+First, run `pip install -r requirements.txt` to install the dependencies
 
-In the backend directory, execute in terminal `export FLASK_APP = run.py`.
+Next, execute in the terminal `export FLASK_APP = run.py`.
 
-You can then execute `flask run` to host the app.
-
-Call `flask routes` to access the all possible routes
+You can then execute `flask run` to host the app locally
