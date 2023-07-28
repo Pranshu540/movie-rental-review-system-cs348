@@ -1,0 +1,26 @@
+<app-header></app-header>
+<mat-form-field id="search-bar">
+    <input type="text" #inputRef placeholder="Search for a movie" aria-label="Number" matInput [formControl]="movieControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
+        <mat-option *ngFor="let option of filteredMovies | async" [value]="option.title">
+          {{ option.title }}
+        </mat-option>
+      </mat-autocomplete>
+    <div class="label">
+        <input type="checkbox" [(ngModel)]="showAvailable" (change)="refreshMovies()" name="Show Available" id="">
+        <label for="">Show Available</label>
+    </div>
+</mat-form-field>
+
+<div class="genres">
+  <span>Filter Genres</span>
+<!-- Dropdown for genre selection -->
+<select [(ngModel)]="selectedGenre" (change)="refreshMovies()" name="Genre">
+  <option *ngFor="let genre of genres" [value]="genre">{{genre}}</option>
+</select>
+</div>
+
+
+<app-movie *ngIf="movieTitle != ''" [movieTitle]="movieTitle"></app-movie>
+
+<app-review *ngIf="movieTitle != ''" [movieTitle]="movieTitle"></app-review>

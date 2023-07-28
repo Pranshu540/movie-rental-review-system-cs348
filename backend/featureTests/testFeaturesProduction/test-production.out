@@ -1,0 +1,101 @@
+mid	title	genre	release_year	duration	rental_price	rental_quantity
+4	The Prodigal Son	Drama	1907	90	9.99	10
+10	In the Prime of Life	Drama	1911	52	9.99	10
+11	The Four Devils	Drama	1911	60	9.99	10
+16	The Traitress	Drama	1911	48	9.99	10
+17	The Adventures of Lieutenant Petrosino	Drama	1912	47	9.99	10
+22	The Great Circus Catastrophe	Drama	1912	45	9.99	10
+23	The Flying Circus	Drama	1912	46	9.99	10
+30	The Life and Death of King Richard III	Drama	1912	55	9.99	10
+31	The Black Chancellor	Drama	1912	48	9.99	10
+38	The Heir to Skjoldborg	Drama	1914	50	9.99	10
+mid	title	genre	release_year	duration	rental_price	rental_quantity
+5414	At 3:25	Sci-Fi	1925	59	9.99	10
+7752	High Treason	Sci-Fi	1929	95	9.99	10
+8478	Midstream	Sci-Fi	1929	70	9.99	10
+8762	Alraune	Sci-Fi	1929	103	9.99	10
+11453	The Tunnel	Sci-Fi	1933	81	9.99	10
+11580	Blokkade	Sci-Fi	1934	58	9.99	10
+11700	End of the World	Sci-Fi	1931	105	9.99	10
+11812	Der Herr der Welt	Sci-Fi	1934	90	9.99	10
+12849	Once in a New Moon	Sci-Fi	1934	63	9.99	10
+17700	Sideral Cruises	Sci-Fi	1942	95	9.99	10
+rental_price
+9.99
+uid	mid	rent_date	due_date	is_active
+1	1917	2020-10-20	2020-10-27	0
+1	1973	2022-07-01	2022-07-08	0
+1	2899	2021-10-01	2021-10-08	0
+1	4586	2023-01-19	2023-01-26	0
+1	9359	2020-09-03	2020-09-10	0
+1	9406	2022-09-29	2022-10-06	0
+1	11524	2023-07-04	2023-07-11	1
+1	13051	2021-05-17	2021-05-24	0
+1	16714	2022-12-29	2023-01-05	0
+1	18485	2021-03-11	2021-03-18	0
+uid	username	password	wallet
+1	YummyGiraffe394	AkkliEg3	167.58
+2	ZanyTurtle582	446XBu1R	62.77
+3	JoyfulRhinoceros588	xHYDWKrY	94.91
+5	ZestyMonkey528	lvLkXPoy	197.48
+6	OptimisticChimpanzee677	OGXFESn2	118.82
+7	IntelligentBat295	G5m64QGt	126.71
+8	EnthusiasticArmadillo630	gx18pb5q	52.36
+9	SincereBobcat906	yycqNh2b	70.20
+10	PlayfulSkunk686	M18ihHXT	147.15
+11	LivelyOwl322	dpxCWXjM	105.94
+mid	title	genre	release_year	duration	rental_price	rental_quantity
+1	Miss Jerry	Romance	1894	45	9.99	10
+2	The Corbett-Fitzsimmons Fight	Documentary	1897	100	9.99	10
+3	The Story of the Kelly Gang	Action	1906	70	9.99	10
+4	The Prodigal Son	Drama	1907	90	9.99	10
+5	The Fairylogue and Radio-Plays	Adventure	1908	120	9.99	10
+6	Locura de amor	Drama	1909	45	9.99	10
+7	Don Juan de Serrallonga	Adventure	1910	58	9.99	10
+8	The Life of Moses	Biography	1909	50	9.99	10
+9	The Battle of Trafalgar	War	1911	51	9.99	1
+10	In the Prime of Life	Drama	1911	52	9.99	10
+uid	mid	review_date	rating	comment
+1	5266	2023-11-22	1	I absolutely loved this movie! It had everything I look for in a film - action, suspense, and a gripping storyline. I couldn't take my eyes off the screen.
+1	15213	2022-05-16	4	The cinematography in this movie was simply breathtaking. The stunning visuals and expertly composed shots added a level of artistry and beauty to the storytelling.
+1	28867	2021-10-22	2	An absolute gem! This movie touched my heart and left me in awe. The performances were incredible, and the storytelling was powerful. Highly recommended.
+1	30310	2022-06-25	4	This movie was a delightful watch. It had a heartwarming story, strong performances, and beautiful cinematography. It left me with a smile on my face.
+1	35211	2020-05-02	3	This movie was a complete disaster. The plot made no sense, and the acting was laughable. Avoid watching it at all costs.
+1	49232	2022-06-16	1	I had mixed feelings about this movie. While the acting was commendable, the storyline lacked depth. It had its moments, but it didn't leave a lasting impact.
+1	57301	2020-03-09	3	I was engrossed in the world-building of this movie. The richly imagined setting, complete with its own history and mythology, made the story feel immersive and captivating.
+1	58140	2023-07-03	1	This movie had a mesmerizing atmosphere that drew me in from the first scene. The visuals were stunning, and the story unfolded in a truly captivating way.
+1	67314	2023-05-27	1	This movie blew me away! It had everything - action, drama, and stunning visuals. The performances were exceptional, and the story was captivating from beginning to end.
+1	75619	2022-02-10	1	I was pleasantly surprised by this movie. It had a unique concept, and the execution was brilliant. The performances were top-notch, and it kept me engaged throughout.
+uid	mid	review_date	rating	comment
+4	10	2023-06-22	4	Teaches me how to steal books!
+9885	10	2020-06-24	1	This movie had a perfect balance of heart and humor. It made me laugh out loud one moment and brought tears to my eyes the next.
+uid	mid	review_date	rating	comment
+4	10	2023-06-22	5	This movie was absolutely amazing I wish I could live in it XD
+9885	10	2020-06-24	1	This movie had a perfect balance of heart and humor. It made me laugh out loud one moment and brought tears to my eyes the next.
+uid	mid	review_date	rating	comment
+9885	10	2020-06-24	1	This movie had a perfect balance of heart and humor. It made me laugh out loud one moment and brought tears to my eyes the next.
+EXISTS(SELECT 1 FROM User WHERE username='HumbleGoat456' AND password='xKODPhDD')
+0
+EXISTS(SELECT 1 FROM User WHERE username='userName' AND password='userPassword')
+0
+EXISTS(SELECT 1 FROM User WHERE username='userName' AND password='userPassword')
+1
+uid	username	password	wallet
+1	YummyGiraffe394	AkkliEg3	167.58
+2	ZanyTurtle582	446XBu1R	62.77
+3	JoyfulRhinoceros588	xHYDWKrY	94.91
+5	ZestyMonkey528	lvLkXPoy	197.48
+6	OptimisticChimpanzee677	OGXFESn2	118.82
+7	IntelligentBat295	G5m64QGt	126.71
+8	EnthusiasticArmadillo630	gx18pb5q	52.36
+9	SincereBobcat906	yycqNh2b	70.20
+10	PlayfulSkunk686	M18ihHXT	147.15
+11	LivelyOwl322	dpxCWXjM	105.94
+genre
+Drama
+mid	title	rental_price	duration
+241341	The Lithium Conspiracy	9.99	104
+171754	Life on the Longboard 2nd Wave	9.99	112
+129349	Seinen no ki	9.99	88
+23736	Sheriff of Wichita	9.99	60
+3011	Empty Arms	9.99	60

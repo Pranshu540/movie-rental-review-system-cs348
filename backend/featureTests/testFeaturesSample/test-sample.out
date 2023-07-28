@@ -1,0 +1,58 @@
+mid	title	genre	release_year	duration	rental_price	rental_quantity
+4	The Shawshank Redemption	Drama	1994	142	9.99	16
+10	The Book Thief	Drama	2013	131	9.99	3
+mid	title	genre	release_year	duration	rental_price	rental_quantity
+3	The Amazing Spider-Man	Sci-Fi	2012	136	9.99	13
+rental_price
+9.99
+uid	mid	rent_date	due_date	is_active
+1	3	2015-12-20	2016-01-03	0
+2	3	2023-06-15	2023-06-29	1
+2	7	2023-06-14	2023-06-28	1
+2	8	2023-06-10	2023-06-24	1
+2	9	2023-07-27	2023-08-10	1
+3	4	2017-05-02	2017-02-19	0
+uid	username	password	wallet
+1	movielover123	Secret48!	500.00
+2	batman	#Imbatman6	89990.00
+3	harold	Passwordd88%	5.00
+4	george	*Captain34	0.00
+5	grace	Swiftie97&	9.99
+mid	title	genre	release_year	duration	rental_price	rental_quantity
+1	The Battle of Trafalgar	War	1911	51	9.99	25
+2	Egyptian Cruise: Part 1	Comedy	1986	60	9.99	19
+3	The Amazing Spider-Man	Sci-Fi	2012	136	9.99	13
+4	The Shawshank Redemption	Drama	1994	142	9.99	16
+5	2001: A Space Odyssey	Sci-Fi	1968	149	9.99	2
+6	The Great Gatsby	Romance	1974	144	9.99	7
+7	The Dark Knight	Action	2008	152	9.99	8
+8	Harry Potter and the Order of the Phoenix	Action	2007	138	9.99	1
+9	Avatar	Action	2009	162	9.99	4
+10	The Book Thief	Drama	2013	131	9.99	3
+uid	mid	review_date	rating	comment
+1	3	2019-09-08	4	Good, but CGI was a bit over the top.
+2	3	2023-06-16	1	Spider-Man is not as as cool as Batman :(
+2	7	2023-06-16	5	I love this movie, Batman rocks!
+3	4	2017-02-21	5	Masterpiece!
+5	9	2015-12-25	3	Decent classic
+uid	mid	review_date	rating	comment
+4	10	2023-06-22	4	Teaches me how to steal books!
+uid	mid	review_date	rating	comment
+4	10	2023-06-22	5	This movie was absolutely amazing I wish I could live in it XD
+EXISTS(SELECT 1 FROM User WHERE username='HumbleGoat456' AND password='xKODPhDD')
+0
+EXISTS(SELECT 1 FROM User WHERE username='userName' AND password='userPassword')
+0
+EXISTS(SELECT 1 FROM User WHERE username='userName' AND password='userPassword')
+1
+uid	username	password	wallet
+1	movielover123	Secret48!	500.00
+2	batman	#Imbatman6	89990.00
+3	harold	Passwordd88%	5.00
+5	grace	Swiftie97&	9.99
+6	userName	userPassword	500.00
+genre
+Sci-Fi
+mid	title	rental_price	duration
+4	The Shawshank Redemption	9.99	142
+10	The Book Thief	9.99	131

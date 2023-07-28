@@ -1,0 +1,20 @@
+<h1>MovieHub</h1>
+
+<form (ngSubmit)="submit(loginForm.value)" #loginForm="ngForm">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput name="username" ngModel>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput name="password" ngModel>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>New User?</mat-label>
+      <mat-select name="newUser" ngModel>
+        <mat-option value="Yes">Yes</mat-option>
+        <mat-option value="No">No</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Login</button>
+  </form>
